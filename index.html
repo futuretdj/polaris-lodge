@@ -123,6 +123,24 @@ main{position:relative;z-index:3}
 .ticker em{font-style:normal;color:var(--glow)}
 @keyframes tick{to{transform:translateX(-100%)}}
 
+
+#incl{padding-top:16vh;padding-bottom:14vh}
+#incl .ih{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:end;margin-bottom:6vh}
+#incl h2{font:700 clamp(40px,5vw,84px)/.95 Syne;letter-spacing:-.04em}
+#incl .ih p{color:var(--dim);max-width:460px}
+.ig{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--hair)}
+.ig div{position:relative;padding:28px 24px 30px 0;border-bottom:1px solid var(--hair);overflow:hidden}
+.ig div:not(:nth-child(3n)){border-right:1px solid var(--hair)}
+.ig div:not(:nth-child(3n+1)){padding-left:24px}
+.ig div:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 0%,rgba(138,245,192,.16),transparent 60%);opacity:0;transition:opacity .5s}
+.ig div:hover:before{opacity:1}
+.ig .mono{color:var(--glow)}
+.ig h3{font:600 clamp(22px,2vw,30px)/1.1 Syne;letter-spacing:-.02em;margin:10px 0 8px;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.ig div:hover h3{transform:translateX(8px)}
+.ig p{color:var(--dim);font-size:15.5px}
+.ifoot{display:flex;gap:28px;flex-wrap:wrap;margin-top:22px;color:var(--dim)}
+.ifoot a{color:var(--glow);text-decoration:none;border-bottom:1px solid currentColor}
+@media (max-width:860px){#incl .ih{grid-template-columns:1fr;gap:18px}.ig{grid-template-columns:1fr}.ig div{border-right:0!important;padding-left:0!important}}
 /* close */
 #close{min-height:100vh;display:grid;grid-template-columns:1.25fr 1fr;gap:6vw;align-items:end;padding-top:34vh;padding-bottom:12vh}
 #close h2{font:800 clamp(56px,9vw,160px)/.82 Syne;letter-spacing:-.055em}
@@ -239,6 +257,19 @@ footer a{color:var(--dim)}
   </div>
   <p class="mono rv" style="color:var(--dim);margin-top:22px">Per night, two guests, breakfast and the night host included. Minimum three nights — the sky doesn’t keep a schedule.</p>
   <a class="mono rv allrooms" href="rooms.html">Photos, details &amp; booking for every room →</a>
+ </section>
+
+ <section id="incl" class="wrap">
+  <div class="ih"><h2 class="rv"><span class="sweep">Included in<br>every night</span></h2><p class="rv">No surprises at check-out. The price of the room already covers everything you need to see the sky and stay warm — you only pay extra for dinner and excursions.</p></div>
+  <div class="ig rv">
+   <div><span class="mono">01 · 21:00–03:00</span><h3>Aurora wake-up call</h3><p>A night host watches the sky and rings your room when it starts.</p></div>
+   <div><span class="mono">02 · until 11:00</span><h3>Breakfast</h3><p>Rye bread, cloudberry jam, smoked lake fish, porridge, strong coffee.</p></div>
+   <div><span class="mono">03 · Tue, Fri, Sun</span><h3>Smoke sauna</h3><p>Heated for seven hours, with an ice hole in the lake.</p></div>
+   <div><span class="mono">04 · Ivalo airport</span><h3>Transfers</h3><p>Picked up at arrivals and brought back. Forty warm minutes.</p></div>
+   <div><span class="mono">05 · all sizes</span><h3>Winter clothing</h3><p>Overalls, boots, mittens and hats rated for −30 °C.</p></div>
+   <div><span class="mono">06 · from the door</span><h3>Snowshoes &amp; skis</h3><p>Marked forest and lake trails of 3, 7 and 14 km.</p></div>
+  </div>
+  <div class="ifoot rv mono"><span>Dinner €58 · excursions from €70 · children under 6 free</span><a href="rooms.html#included">All details →</a><a href="experiences.html#trips">Excursions →</a></div>
  </section>
 
  <div class="ticker" aria-hidden="true"><div><span>200 aurora nights a year</span><em>✳</em><span>−31 °C, coldest night last winter</span><em>✳</em><span>0 streetlights</span><em>✳</em><span>9 h of darkness in November</span><em>✳</em><span>1 knock on your door</span><em>✳</em></div><div><span>200 aurora nights a year</span><em>✳</em><span>−31 °C, coldest night last winter</span><em>✳</em><span>0 streetlights</span><em>✳</em><span>9 h of darkness in November</span><em>✳</em><span>1 knock on your door</span><em>✳</em></div></div>
