@@ -8,6 +8,11 @@
 <meta name="theme-color" content="#04060d">
 <link rel="preload" href="fonts/syne.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:.35s cubic-bezier(.4,0,.2,1) both vtOut}
+::view-transition-new(root){animation:.45s cubic-bezier(.2,.7,.2,1) both vtIn}
+@keyframes vtOut{to{opacity:0;transform:scale(.985)}}
+@keyframes vtIn{from{opacity:0;transform:scale(1.015)}}
 @font-face{font-family:Syne;src:url(fonts/syne.woff2) format('woff2');font-weight:400 800;font-display:swap}
 @font-face{font-family:Inter;src:url(fonts/inter.woff2) format('woff2');font-weight:300 700;font-display:swap}
 @font-face{font-family:Plex;src:url(fonts/mono.woff2) format('woff2');font-weight:400;font-display:swap}
@@ -47,7 +52,7 @@ main{position:relative;z-index:3}
 #hero{height:100vh;min-height:620px;position:relative}
 #hero h1{position:absolute;left:clamp(14px,4vw,64px);bottom:clamp(70px,13vh,140px);font:800 clamp(56px,16.4vw,300px)/.8 Syne;letter-spacing:-.055em;color:transparent;background:radial-gradient(circle at var(--lx,30%) var(--ly,20%),#ffffff 0,#f2f4f8 30%,#b6bfd0 65%,#6f7a93 100%);-webkit-background-clip:text;background-clip:text;will-change:text-shadow}
 #hero h1.tsh{background:none;color:transparent}
-#hero .lede{position:absolute;right:clamp(18px,6vw,96px);bottom:calc(clamp(70px,13vh,140px) + 15.5vw);max-width:330px;font-size:16px;color:var(--dim)}
+#hero .lede{text-shadow:0 1px 14px rgba(4,6,13,.95),0 0 3px rgba(4,6,13,.8);position:absolute;right:clamp(18px,6vw,96px);bottom:calc(clamp(70px,13vh,140px) + 15.5vw);max-width:330px;font-size:16px;color:var(--dim)}
 #hero .lede strong{color:var(--paper);font-weight:500}
 #hero .read{position:absolute;right:clamp(18px,6vw,96px);top:96px;display:grid;grid-template-columns:auto auto;gap:6px 22px;color:var(--dim)}
 #hero .read span:nth-child(even){color:var(--paper);text-align:right}
@@ -67,8 +72,8 @@ main{position:relative;z-index:3}
 
 /* flashlight */
 #dark{position:relative;height:110vh;overflow:hidden;background:#010204}
-#dark .ph{position:absolute;inset:0;background:url(img/aurora2.jpg) center/cover;-webkit-mask-image:radial-gradient(circle var(--r,190px) at var(--fx,50%) var(--fy,50%),#000 0,rgba(0,0,0,.85) 45%,transparent 100%);mask-image:radial-gradient(circle var(--r,190px) at var(--fx,50%) var(--fy,50%),#000 0,rgba(0,0,0,.85) 45%,transparent 100%);filter:saturate(1.15) contrast(1.08) brightness(1.15)}
-#dark .ghost{position:absolute;inset:0;background:url(img/aurora2.jpg) center/cover;opacity:.1;filter:grayscale(1) brightness(.6)}
+#dark .ph{position:absolute;inset:0;background:url(img/aurora2-1600.webp) center/cover;-webkit-mask-image:radial-gradient(circle var(--r,190px) at var(--fx,50%) var(--fy,50%),#000 0,rgba(0,0,0,.85) 45%,transparent 100%);mask-image:radial-gradient(circle var(--r,190px) at var(--fx,50%) var(--fy,50%),#000 0,rgba(0,0,0,.85) 45%,transparent 100%);filter:saturate(1.15) contrast(1.08) brightness(1.15)}
+#dark .ghost{position:absolute;inset:0;background:url(img/aurora2-1600.webp) center/cover;opacity:.1;filter:grayscale(1) brightness(.6)}
 #dark h2{position:absolute;left:clamp(18px,6vw,96px);top:16vh;font:700 clamp(40px,6vw,96px)/.95 Syne;letter-spacing:-.04em;max-width:7.5em;pointer-events:none;mix-blend-mode:difference}
 #dark .cap{position:absolute;right:clamp(18px,6vw,96px);bottom:9vh;max-width:300px;color:var(--dim);pointer-events:none}
 #dark .hint{position:absolute;left:clamp(18px,6vw,96px);bottom:9vh;color:var(--lamp)}
@@ -93,7 +98,7 @@ main{position:relative;z-index:3}
 /* circle reveal */
 #sauna{height:260vh}
 #sauna .pin{position:sticky;top:0;height:100vh;overflow:hidden}
-#sauna .ph{position:absolute;inset:0;background:url(img/sauna.jpg) center/cover;clip-path:circle(var(--c,7%) at 50% 52%);transform:scale(var(--z,1.3));filter:saturate(1.1) contrast(1.05)}
+#sauna .ph{position:absolute;inset:0;background:url(img/sauna-1600.webp) center/cover;clip-path:circle(var(--c,7%) at 50% 52%);transform:scale(var(--z,1.3));filter:saturate(1.1) contrast(1.05)}
 #sauna .ph:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,6,13,.55),rgba(4,6,13,0) 40%,rgba(4,6,13,.75))}
 #sauna .t{position:absolute;left:clamp(18px,6vw,96px);right:clamp(18px,6vw,96px);bottom:10vh;display:grid;grid-template-columns:1.1fr 1fr;gap:6vw;align-items:end;opacity:var(--o,0);transform:translateY(calc((1 - var(--o,0)) * 40px))}
 #sauna h2{font:800 clamp(52px,8vw,140px)/.85 Syne;letter-spacing:-.05em}
@@ -170,6 +175,8 @@ footer a{color:var(--dim)}
 #intro span{color:var(--dim)}
 
 @media (max-width:860px){
+ #dark .ph,#dark .ghost{background-image:url(img/aurora2-800.webp)}
+ #sauna .ph{background-image:url(img/sauna-800.webp)}
  .top{grid-template-columns:1fr auto}.top .mid,.top a.l,.side,.meter{display:none}
  #hero .read{top:76px;left:18px;right:18px}
  #hero h1.tsh{background:none;color:transparent}
@@ -184,8 +191,10 @@ footer a{color:var(--dim)}
  #close{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}#grain,.ticker div{animation:none}}
+@media (max-width:860px),(hover:none){#grain{display:none}.top.sc{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(4,6,13,.94)!important}}
 </style>
-<script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/"}}</script>
+<script type="importmap">{"imports":{"three":"./lib/three.module.min.js","three/addons/":"./lib/"}}</script>
+<script type="speculationrules">{"prefetch":[{"source":"list","urls":["index.html","rooms.html","experiences.html"],"eagerness":"moderate"}]}</script>
 </head>
 <body>
 <div id="intro"><b>Polaris</b><span class="mono" id="introN">darkness 0%</span></div>
@@ -230,11 +239,11 @@ footer a{color:var(--dim)}
   <div class="pin">
    <header><h2 class="sweep">From the night log</h2><div class="mono">Kept by the night host<br>one line per sky, since 2019</div></header>
    <div class="track" id="track">
-    <article class="entry"><div class="card"><img src="img/aurora1.jpg" alt="Green aurora arc above a frozen lake" loading="lazy"><span class="stamp mono">№ 0412</span></div><div class="meta mono"><span>14 Nov · 23:51</span><span>Kp 6 · −19 °C</span></div><blockquote>The arc came up over the lake <b>like a slow wave</b>. Two guests from Lisbon stood on the ice in socks. Nobody spoke for eleven minutes.</blockquote></article>
-    <article class="entry"><div class="card"><img src="img/aurora4.jpg" alt="Red and green corona above a forest" loading="lazy"><span class="stamp mono">№ 0388</span></div><div class="meta mono"><span>02 Nov · 00:17</span><span>Kp 8 · −11 °C</span></div><blockquote>Red at the top. We see it maybe twice a winter. <b>The whole sky pulsed</b>; the forest looked lit from inside.</blockquote></article>
-    <article class="entry"><div class="card"><img src="img/star.jpg" alt="Star trails over a frozen lake" loading="lazy"><span class="stamp mono">№ 0301</span></div><div class="meta mono"><span>19 Jan · 02:40</span><span>Kp 2 · −31 °C</span></div><blockquote>A quiet night. We left a camera open for ninety minutes. <b>The sky turned around the old boat</b> and the North Star stayed still.</blockquote></article>
-    <article class="entry"><div class="card"><img src="img/reindeer.jpg" alt="Reindeer sled in snowy forest" loading="lazy"><span class="stamp mono">№ 0297</span></div><div class="meta mono"><span>16 Jan · 11:05</span><span>daylight 1 h 50 m</span></div><blockquote>No sky today — snow from the east. Ante took everyone out with the reindeer instead. <b>Back by two, already blue outside.</b></blockquote></article>
-    <article class="entry"><div class="card"><img src="img/aurora3.jpg" alt="Green aurora bands above a frozen lake" loading="lazy"><span class="stamp mono">№ 0451</span></div><div class="meta mono"><span>28 Nov · 21:12</span><span>Kp 5 · −22 °C</span></div><blockquote>Early start, right after dinner. <b>Three bands, then rays.</b> Coffee went cold on every windowsill.</blockquote></article>
+    <article class="entry"><div class="card"><img src="img/aurora1-800.webp" srcset="img/aurora1-800.webp 800w, img/aurora1-1600.webp 1600w" sizes="(max-width:860px) 250px, 34vw" decoding="async" alt="Green aurora arc above a frozen lake" loading="lazy"><span class="stamp mono">№ 0412</span></div><div class="meta mono"><span>14 Nov · 23:51</span><span>Kp 6 · −19 °C</span></div><blockquote>The arc came up over the lake <b>like a slow wave</b>. Two guests from Lisbon stood on the ice in socks. Nobody spoke for eleven minutes.</blockquote></article>
+    <article class="entry"><div class="card"><img src="img/aurora4-800.webp" srcset="img/aurora4-800.webp 800w, img/aurora4-1600.webp 1600w" sizes="(max-width:860px) 250px, 34vw" decoding="async" alt="Red and green corona above a forest" loading="lazy"><span class="stamp mono">№ 0388</span></div><div class="meta mono"><span>02 Nov · 00:17</span><span>Kp 8 · −11 °C</span></div><blockquote>Red at the top. We see it maybe twice a winter. <b>The whole sky pulsed</b>; the forest looked lit from inside.</blockquote></article>
+    <article class="entry"><div class="card"><img src="img/star-800.webp" srcset="img/star-800.webp 800w, img/star-1600.webp 1600w" sizes="(max-width:860px) 250px, 34vw" decoding="async" alt="Star trails over a frozen lake" loading="lazy"><span class="stamp mono">№ 0301</span></div><div class="meta mono"><span>19 Jan · 02:40</span><span>Kp 2 · −31 °C</span></div><blockquote>A quiet night. We left a camera open for ninety minutes. <b>The sky turned around the old boat</b> and the North Star stayed still.</blockquote></article>
+    <article class="entry"><div class="card"><img src="img/reindeer-800.webp" srcset="img/reindeer-800.webp 800w, img/reindeer-1600.webp 1600w" sizes="(max-width:860px) 250px, 34vw" decoding="async" alt="Reindeer sled in snowy forest" loading="lazy"><span class="stamp mono">№ 0297</span></div><div class="meta mono"><span>16 Jan · 11:05</span><span>daylight 1 h 50 m</span></div><blockquote>No sky today — snow from the east. Ante took everyone out with the reindeer instead. <b>Back by two, already blue outside.</b></blockquote></article>
+    <article class="entry"><div class="card"><img src="img/aurora3-800.webp" srcset="img/aurora3-800.webp 800w, img/aurora3-1600.webp 1600w" sizes="(max-width:860px) 250px, 34vw" decoding="async" alt="Green aurora bands above a frozen lake" loading="lazy"><span class="stamp mono">№ 0451</span></div><div class="meta mono"><span>28 Nov · 21:12</span><span>Kp 5 · −22 °C</span></div><blockquote>Early start, right after dinner. <b>Three bands, then rays.</b> Coffee went cold on every windowsill.</blockquote></article>
    </div>
   </div>
  </section>
@@ -290,7 +299,7 @@ footer a{color:var(--dim)}
  <span>Polaris is a fictional lodge — a design study by Vanys Studio, 2026.</span>
  <span class="credits" id="credits"></span>
 </footer>
-<div id="peek"><img src="img/aurora1.jpg" alt=""><img src="img/star.jpg" alt=""><img src="img/sauna.jpg" alt=""><img src="img/reindeer.jpg" alt=""></div>
+<div id="peek"><img src="img/aurora1-800.webp" srcset="img/aurora1-800.webp 800w, img/aurora1-1600.webp 1600w" sizes="(max-width:860px) 250px, 34vw" decoding="async" alt=""><img src="img/star-800.webp" srcset="img/star-800.webp 800w, img/star-1600.webp 1600w" sizes="(max-width:860px) 250px, 34vw" decoding="async" alt=""><img src="img/sauna-800.webp" srcset="img/sauna-800.webp 800w, img/sauna-1600.webp 1600w" sizes="(max-width:860px) 250px, 34vw" decoding="async" alt=""><img src="img/reindeer-800.webp" srcset="img/reindeer-800.webp 800w, img/reindeer-1600.webp 1600w" sizes="(max-width:860px) 250px, 34vw" decoding="async" alt=""></div>
 <script type="module" src="main.js"></script>
 </body>
 </html>

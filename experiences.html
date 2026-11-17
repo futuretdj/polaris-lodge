@@ -8,6 +8,11 @@
 <meta name="theme-color" content="#04060d">
 <link rel="preload" href="fonts/syne.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:.35s cubic-bezier(.4,0,.2,1) both vtOut}
+::view-transition-new(root){animation:.45s cubic-bezier(.2,.7,.2,1) both vtIn}
+@keyframes vtOut{to{opacity:0;transform:scale(.985)}}
+@keyframes vtIn{from{opacity:0;transform:scale(1.015)}}
 @font-face{font-family:Syne;src:url(fonts/syne.woff2) format('woff2');font-weight:400 800;font-display:swap}
 @font-face{font-family:Inter;src:url(fonts/inter.woff2) format('woff2');font-weight:300 700;font-display:swap}
 @font-face{font-family:Plex;src:url(fonts/mono.woff2) format('woff2');font-weight:400;font-display:swap}
@@ -211,8 +216,11 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
  .end{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}#grain{animation:none}}
+@media (max-width:860px),(hover:none){#grain{display:none}.top.sc{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(4,6,13,.94)!important}}
+#dining,#guide,#seasons{content-visibility:auto;contain-intrinsic-size:auto 1600px}
 </style>
-<script type="importmap">{"imports":{"three":"./lib/three.module.js"}}</script>
+<script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
+<script type="speculationrules">{"prefetch":[{"source":"list","urls":["index.html","rooms.html","experiences.html"],"eagerness":"moderate"}]}</script>
 </head>
 <body>
 <canvas id="sky"></canvas><div id="grain"></div><div id="dot"></div>
@@ -260,7 +268,7 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    <div class="x">
     <button aria-expanded="false"><span class="n mono">01</span><h3>Husky safari</h3><span class="meta mono">4 h · daytime</span><span class="pr">€140</span><span class="pl"></span></button>
     <div class="panel"><div class="inner">
-     <div class="ph"><img src="img/x_husky.jpg" alt="Husky team running through a snowy forest" loading="lazy"><span class="cap mono">Pirkko’s team, 10:40, −18 °C</span></div>
+     <div class="ph"><img src="img/x_husky-800.webp" srcset="img/x_husky-800.webp 800w, img/x_husky-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="Husky team running through a snowy forest" loading="lazy"><span class="cap mono">Pirkko’s team, 10:40, −18 °C</span></div>
      <div class="txt">
       <p>Twenty kilometres through the forest and over the frozen lake behind your own team of six dogs. The moment they are released, the howling stops and there is only the sound of the runners on the snow.</p>
       <p>We work with Pirkko and Jussi, a family kennel twenty minutes away with 62 Alaskan huskies. You drive the sled yourself — two people per sled, one standing and steering, one sitting wrapped in a reindeer skin — and you swap halfway. Steering is easier than it looks: a ten-minute lesson is enough. The dogs know the trail better than anyone.</p>
@@ -276,7 +284,7 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    <div class="x">
     <button aria-expanded="false"><span class="n mono">02</span><h3>Reindeer evening</h3><span class="meta mono">3 h · evening</span><span class="pr">€90</span><span class="pl"></span></button>
     <div class="panel"><div class="inner">
-     <div class="ph"><img src="img/reindeer.jpg" alt="Reindeer sled in a snowy forest" loading="lazy"><span class="cap mono">Ante’s herd, near Kaamanen</span></div>
+     <div class="ph"><img src="img/reindeer-800.webp" srcset="img/reindeer-800.webp 800w, img/reindeer-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="Reindeer sled in a snowy forest" loading="lazy"><span class="cap mono">Ante’s herd, near Kaamanen</span></div>
      <div class="txt">
       <p>A quiet evening with Ante, a Sámi reindeer herder whose family has kept reindeer around Inari for at least seven generations. No show, no costumes — just his farm, his animals and his stories.</p>
       <p>You feed the reindeer lichen from your hands (they are shy, then suddenly very brave), then take a slow sleigh ride by lantern light through the forest — a single reindeer pulls each sleigh, walking pace, perfectly silent. Afterwards, coffee boiled over the fire in Ante’s kota, dried reindeer meat, and an hour of stories: how herding works today, the eight seasons of the Sámi year, and why every reindeer in Lapland belongs to someone.</p>
@@ -292,7 +300,7 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    <div class="x">
     <button aria-expanded="false"><span class="n mono">03</span><h3>Aurora photo night</h3><span class="meta mono">4 h · night</span><span class="pr">€180</span><span class="pl"></span></button>
     <div class="panel"><div class="inner">
-     <div class="ph"><img src="img/aurora4.jpg" alt="Red and green aurora corona above a forest" loading="lazy"><span class="cap mono">Corona, 02 Nov, f/2.8 · 4 s · ISO 3200</span></div>
+     <div class="ph"><img src="img/aurora4-800.webp" srcset="img/aurora4-800.webp 800w, img/aurora4-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="Red and green aurora corona above a forest" loading="lazy"><span class="cap mono">Corona, 02 Nov, f/2.8 · 4 s · ISO 3200</span></div>
      <div class="txt">
       <p>A night chasing the clearest sky in the region with Mika, our resident photographer and astronomer, and coming home with pictures you will actually print.</p>
       <p>Mika checks the cloud radar and the magnetometer at 20:00 and decides where to go: a fell top with a view in all directions, a frozen river bend with old pines, or the shore of an open-water rapid where the aurora reflects. You get a full-frame camera, a wide lens and a tripod to use for the night, and a patient explanation of every setting. If you prefer your phone, he will show you how to get the most from it.</p>
@@ -308,7 +316,7 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    <div class="x">
     <button aria-expanded="false"><span class="n mono">04</span><h3>Ice fishing</h3><span class="meta mono">3 h · daytime</span><span class="pr">€70</span><span class="pl"></span></button>
     <div class="panel"><div class="inner">
-     <div class="ph"><img src="img/x_fishing.jpg" alt="Ice fishing hole on a frozen lake at blue hour" loading="lazy"><span class="cap mono">A quiet bay of Lake Inari, blue hour</span></div>
+     <div class="ph"><img src="img/x_fishing-800.webp" srcset="img/x_fishing-800.webp 800w, img/x_fishing-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="Ice fishing hole on a frozen lake at blue hour" loading="lazy"><span class="cap mono">A quiet bay of Lake Inari, blue hour</span></div>
      <div class="txt">
       <p>Lake Inari is the third-largest lake in Finland, has more than 3,000 islands, and from January to April you can walk on it. Under the ice live whitefish, perch and the arctic char that ends up on our dinner menu.</p>
       <p>We cross the ice by snowmobile sled to a quiet bay, drill holes with a hand auger (try it — it is good exercise) and sit on reindeer skins with short rods and a lot of patience. Our guide Esa grew up fishing here and knows where the perch gather. Whatever we catch, we cook over the fire on a wooden plank right there on the ice.</p>
@@ -324,7 +332,7 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    <div class="x">
     <button aria-expanded="false"><span class="n mono">05</span><h3>Snowshoes to the fell</h3><span class="meta mono">5 h · daytime</span><span class="pr">€85</span><span class="pl"></span></button>
     <div class="panel"><div class="inner">
-     <div class="ph"><img src="img/x_snowshoe.jpg" alt="Snowshoe trail through snow-crowned trees" loading="lazy"><span class="cap mono">Tykky — snow crowns on the pines</span></div>
+     <div class="ph"><img src="img/x_snowshoe-800.webp" srcset="img/x_snowshoe-800.webp 800w, img/x_snowshoe-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="Snowshoe trail through snow-crowned trees" loading="lazy"><span class="cap mono">Tykky — snow crowns on the pines</span></div>
      <div class="txt">
       <p>A slow walk through a forest where every tree is wrapped in snow — the Finns call it <em>tykky</em> — to the top of Otsamo fell, 400 metres above the lake, with a view over half of Lapland.</p>
       <p>Snowshoes let you walk on top of a metre of fresh snow without sinking. The path climbs gently; we stop often to look at tracks (fox, hare, ptarmigan, sometimes a wolverine), to take photos in the pink light, and to drink something hot. At the top there is an open shelter with a fire place, and on a clear day you can see Norway.</p>
@@ -340,7 +348,7 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    <div class="x">
     <button aria-expanded="false"><span class="n mono">06</span><h3>Sámi culture day</h3><span class="meta mono">5 h · daytime</span><span class="pr">€75</span><span class="pl"></span></button>
     <div class="panel"><div class="inner">
-     <div class="ph"><img src="img/stove.jpg" alt="Fire inside a traditional wooden hut" loading="lazy"><span class="cap mono">A fire in the old smoke cabin</span></div>
+     <div class="ph"><img src="img/stove-800.webp" srcset="img/stove-800.webp 800w, img/stove-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="Fire inside a traditional wooden hut" loading="lazy"><span class="cap mono">A fire in the old smoke cabin</span></div>
      <div class="txt">
       <p>Inari is the heart of Sámi culture in Finland — home to the Sámi Parliament and to three Sámi languages. This day is about understanding the people who have lived here for thousands of years, from the people themselves.</p>
       <p>We start at Siida, the Sámi museum, where a Sámi guide walks you through the exhibition about the eight seasons and the life of the land. Then to Sajos, the cultural centre, and the open-air museum with old storage huts and a reindeer fence. Lunch is at a family restaurant in the village. In the afternoon, a duodji (handicraft) workshop: you make a small reindeer-leather bracelet with tin thread to take home.</p>
@@ -362,10 +370,10 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    <div class="rv"><p class="lead">Kammi means “hut” in the old local dialect. It is our dining room: eight tables, big windows facing north, candles, and food from within a hundred kilometres. Chef Laura Kitti changes the menu every week, depending on what the lake, the forest and the herders give us.</p></div>
   </div>
   <div class="plates rv">
-   <figure><img src="img/f_soup.jpg" alt="Salmon soup with dill" loading="lazy"><figcaption class="mono">Lohikeitto</figcaption></figure>
-   <figure><img src="img/f_fish.jpg" alt="Arctic char on a wooden plank" loading="lazy"><figcaption class="mono">Char on the plank</figcaption></figure>
-   <figure><img src="img/stove.jpg" alt="The fire in the dining room" loading="lazy"><figcaption class="mono">The fire at Kammi</figcaption></figure>
-   <figure><img src="img/in_breakfast.jpg" alt="Breakfast table by the window" loading="lazy"><figcaption class="mono">Breakfast, 9:00</figcaption></figure>
+   <figure><img src="img/f_soup-800.webp" srcset="img/f_soup-800.webp 800w, img/f_soup-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="Salmon soup with dill" loading="lazy"><figcaption class="mono">Lohikeitto</figcaption></figure>
+   <figure><img src="img/f_fish-800.webp" srcset="img/f_fish-800.webp 800w, img/f_fish-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="Arctic char on a wooden plank" loading="lazy"><figcaption class="mono">Char on the plank</figcaption></figure>
+   <figure><img src="img/stove-800.webp" srcset="img/stove-800.webp 800w, img/stove-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="The fire in the dining room" loading="lazy"><figcaption class="mono">The fire at Kammi</figcaption></figure>
+   <figure><img src="img/in_breakfast-800.webp" srcset="img/in_breakfast-800.webp 800w, img/in_breakfast-1600.webp 1600w" sizes="(max-width:860px) 250px, 50vw" decoding="async" alt="Breakfast table by the window" loading="lazy"><figcaption class="mono">Breakfast, 9:00</figcaption></figure>
   </div>
   <div class="menu rv">
    <div class="mh"><h3>This week’s menu</h3><span class="mono">Five courses · €58 · served 18:30</span></div>

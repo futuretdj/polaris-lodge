@@ -8,6 +8,11 @@
 <meta name="theme-color" content="#04060d">
 <link rel="preload" href="fonts/syne.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:.35s cubic-bezier(.4,0,.2,1) both vtOut}
+::view-transition-new(root){animation:.45s cubic-bezier(.2,.7,.2,1) both vtIn}
+@keyframes vtOut{to{opacity:0;transform:scale(.985)}}
+@keyframes vtIn{from{opacity:0;transform:scale(1.015)}}
 @font-face{font-family:Syne;src:url(fonts/syne.woff2) format('woff2');font-weight:400 800;font-display:swap}
 @font-face{font-family:Inter;src:url(fonts/inter.woff2) format('woff2');font-weight:300 700;font-display:swap}
 @font-face{font-family:Plex;src:url(fonts/mono.woff2) format('woff2');font-weight:400;font-display:swap}
@@ -207,8 +212,12 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
  .sum{position:relative;top:0}
 }
 @media (prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}#grain{animation:none}.hero{clip-path:none}}
+@media (max-width:860px),(hover:none){#grain{display:none}.top.sc{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(4,6,13,.94)!important}}
+.room,#compare,#included,#rules{content-visibility:auto;contain-intrinsic-size:auto 1400px}
+@media (max-width:860px){.sum{backdrop-filter:none;background:rgba(4,6,13,.92)}}
 </style>
-<script type="importmap">{"imports":{"three":"./lib/three.module.js"}}</script>
+<script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
+<script type="speculationrules">{"prefetch":[{"source":"list","urls":["index.html","rooms.html","experiences.html"],"eagerness":"moderate"}]}</script>
 </head>
 <body>
 <canvas id="sky"></canvas><div id="grain"></div><div id="dot"></div>
@@ -242,7 +251,7 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
  <!-- 01 -->
  <article class="room wrap" id="glass">
   <div class="head"><div><div class="no mono">Room type 01 / 04 · eight rooms</div><h2 class="rv">Glass Room</h2></div><p class="tag rv">A warm bed under a glass roof. The sky is your ceiling.</p></div>
-  <div class="hero"><img src="img/room_glass.jpg" alt="A glass-roofed cabin glowing in a snowy pine forest at night"><div class="light"></div><span class="cap mono">Glass Room № 4 · −24 °C outside, +21 °C inside</span></div>
+  <div class="hero"><img src="img/room_glass-800.webp" srcset="img/room_glass-800.webp 800w, img/room_glass-1600.webp 1600w" sizes="(max-width:860px) 250px, 100vw" decoding="async" alt="A glass-roofed cabin glowing in a snowy pine forest at night"><div class="light"></div><span class="cap mono">Glass Room № 4 · −24 °C outside, +21 °C inside</span></div>
   <div class="body">
    <div class="story rv">
     <p>Half of the roof is made of heated glass that never frosts over. Lie down, switch off the reading lamp, and the whole northern sky is in front of you — the stars, the Milky Way and, on most clear nights, the aurora.</p>
@@ -257,16 +266,16 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    </div>
   </div>
   <div class="gal rv">
-   <figure><img src="img/aurora3.jpg" alt="Green aurora above the frozen lake" loading="lazy"><figcaption class="mono">The view from bed, 28 Nov</figcaption></figure>
-   <figure><img src="img/in_bath.jpg" alt="Slate bathroom with window to the forest" loading="lazy"><figcaption class="mono">Bathroom</figcaption></figure>
-   <figure><img src="img/in_breakfast.jpg" alt="Breakfast table by the window" loading="lazy"><figcaption class="mono">Breakfast at the window</figcaption></figure>
+   <figure><img src="img/aurora3-800.webp" srcset="img/aurora3-800.webp 800w, img/aurora3-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Green aurora above the frozen lake" loading="lazy"><figcaption class="mono">The view from bed, 28 Nov</figcaption></figure>
+   <figure><img src="img/in_bath-800.webp" srcset="img/in_bath-800.webp 800w, img/in_bath-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Slate bathroom with window to the forest" loading="lazy"><figcaption class="mono">Bathroom</figcaption></figure>
+   <figure><img src="img/in_breakfast-800.webp" srcset="img/in_breakfast-800.webp 800w, img/in_breakfast-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Breakfast table by the window" loading="lazy"><figcaption class="mono">Breakfast at the window</figcaption></figure>
   </div>
  </article>
 
  <!-- 02 -->
  <article class="room wrap" id="observer">
   <div class="head"><div><div class="no mono">Room type 02 / 04 · two rooms</div><h2 class="rv">Observer’s Room</h2></div><p class="tag rv">For people who want to know what they are looking at.</p></div>
-  <div class="hero"><img src="img/star.jpg" alt="Star trails turning around the North Star above a frozen lake" loading="lazy"><div class="light"></div><span class="cap mono">90-minute exposure from the Observer’s terrace</span></div>
+  <div class="hero"><img src="img/star-800.webp" srcset="img/star-800.webp 800w, img/star-1600.webp 1600w" sizes="(max-width:860px) 250px, 100vw" decoding="async" alt="Star trails turning around the North Star above a frozen lake" loading="lazy"><div class="light"></div><span class="cap mono">90-minute exposure from the Observer’s terrace</span></div>
   <div class="body">
    <div class="story rv">
     <p>The two rooms at the end of the shore path each have their own terrace with a 400 mm telescope on a fixed pier, already aligned to the pole. On the desk: star charts for this month, a red reading lamp and a notebook from every guest who stayed before you.</p>
@@ -281,16 +290,16 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    </div>
   </div>
   <div class="gal rv">
-   <figure><img src="img/in_observer.jpg" alt="Room with armchair and a window to the snowy forest" loading="lazy"><figcaption class="mono">The window chair</figcaption></figure>
-   <figure><img src="img/aurora1.jpg" alt="Aurora arc above the lake" loading="lazy"><figcaption class="mono">From the terrace, 14 Nov</figcaption></figure>
-   <figure><img src="img/in_breakfast.jpg" alt="Late breakfast" loading="lazy"><figcaption class="mono">Late breakfast</figcaption></figure>
+   <figure><img src="img/in_observer-800.webp" srcset="img/in_observer-800.webp 800w, img/in_observer-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Room with armchair and a window to the snowy forest" loading="lazy"><figcaption class="mono">The window chair</figcaption></figure>
+   <figure><img src="img/aurora1-800.webp" srcset="img/aurora1-800.webp 800w, img/aurora1-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Aurora arc above the lake" loading="lazy"><figcaption class="mono">From the terrace, 14 Nov</figcaption></figure>
+   <figure><img src="img/in_breakfast-800.webp" srcset="img/in_breakfast-800.webp 800w, img/in_breakfast-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Late breakfast" loading="lazy"><figcaption class="mono">Late breakfast</figcaption></figure>
   </div>
  </article>
 
  <!-- 03 -->
  <article class="room wrap" id="shore">
   <div class="head"><div><div class="no mono">Room type 03 / 04 · one cabin</div><h2 class="rv">Shore Cabin</h2></div><p class="tag rv">A whole house by the lake. Your own fire, your own sauna.</p></div>
-  <div class="hero"><img src="img/room_shore.jpg" alt="Green aurora above a wooden cabin among pine trees" loading="lazy"><div class="light"></div><span class="cap mono">The Shore Cabin, Kp 6, 23:40</span></div>
+  <div class="hero"><img src="img/room_shore-800.webp" srcset="img/room_shore-800.webp 800w, img/room_shore-1600.webp 1600w" sizes="(max-width:860px) 250px, 100vw" decoding="async" alt="Green aurora above a wooden cabin among pine trees" loading="lazy"><div class="light"></div><span class="cap mono">The Shore Cabin, Kp 6, 23:40</span></div>
   <div class="body">
    <div class="story rv">
     <p>The oldest building on our land: a log house built in 1952 by a reindeer herder and restored by his granddaughter. It stands alone on the shore, two hundred metres from the main house, with nothing between its windows and the lake.</p>
@@ -305,16 +314,16 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    </div>
   </div>
   <div class="gal rv">
-   <figure><img src="img/in_shore.jpg" alt="Living room with fireplace and lake window" loading="lazy"><figcaption class="mono">Living room</figcaption></figure>
-   <figure><img src="img/sauna.jpg" alt="Smoke sauna in the snow" loading="lazy"><figcaption class="mono">The sauna path</figcaption></figure>
-   <figure><img src="img/reindeer.jpg" alt="Reindeer in the snowy forest" loading="lazy"><figcaption class="mono">Neighbours</figcaption></figure>
+   <figure><img src="img/in_shore-800.webp" srcset="img/in_shore-800.webp 800w, img/in_shore-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Living room with fireplace and lake window" loading="lazy"><figcaption class="mono">Living room</figcaption></figure>
+   <figure><img src="img/sauna-800.webp" srcset="img/sauna-800.webp 800w, img/sauna-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Smoke sauna in the snow" loading="lazy"><figcaption class="mono">The sauna path</figcaption></figure>
+   <figure><img src="img/reindeer-800.webp" srcset="img/reindeer-800.webp 800w, img/reindeer-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Reindeer in the snowy forest" loading="lazy"><figcaption class="mono">Neighbours</figcaption></figure>
   </div>
  </article>
 
  <!-- 04 -->
  <article class="room wrap" id="kota">
   <div class="head"><div><div class="no mono">Room type 04 / 04 · one loft</div><h2 class="rv">Kota Loft</h2></div><p class="tag rv">Sleep by an open fire, the way people here did for centuries.</p></div>
-  <div class="hero"><img src="img/room_kota.jpg" alt="Aurora above a kota hut with glowing door in the snow" loading="lazy"><div class="light"></div><span class="cap mono">The Kota, a quiet red aurora, 02 Nov</span></div>
+  <div class="hero"><img src="img/room_kota-800.webp" srcset="img/room_kota-800.webp 800w, img/room_kota-1600.webp 1600w" sizes="(max-width:860px) 250px, 100vw" decoding="async" alt="Aurora above a kota hut with glowing door in the snow" loading="lazy"><div class="light"></div><span class="cap mono">The Kota, a quiet red aurora, 02 Nov</span></div>
   <div class="body">
    <div class="story rv">
     <p>A kota is the traditional Sámi hut: a cone of wood with a fire in the middle and a smoke hole in the roof. Ours has been made warm and comfortable, but it is still the most honest room we have.</p>
@@ -329,9 +338,9 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
    </div>
   </div>
   <div class="gal rv">
-   <figure><img src="img/in_kota.jpg" alt="Inside a wooden hut with fire and bed" loading="lazy"><figcaption class="mono">Inside the kota</figcaption></figure>
-   <figure><img src="img/stove.jpg" alt="Glowing wood stove" loading="lazy"><figcaption class="mono">Fire</figcaption></figure>
-   <figure><img src="img/aurora4.jpg" alt="Red and green aurora corona" loading="lazy"><figcaption class="mono">Through the smoke hole</figcaption></figure>
+   <figure><img src="img/in_kota-800.webp" srcset="img/in_kota-800.webp 800w, img/in_kota-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Inside a wooden hut with fire and bed" loading="lazy"><figcaption class="mono">Inside the kota</figcaption></figure>
+   <figure><img src="img/stove-800.webp" srcset="img/stove-800.webp 800w, img/stove-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Glowing wood stove" loading="lazy"><figcaption class="mono">Fire</figcaption></figure>
+   <figure><img src="img/aurora4-800.webp" srcset="img/aurora4-800.webp 800w, img/aurora4-1600.webp 1600w" sizes="(max-width:860px) 250px, 40vw" decoding="async" alt="Red and green aurora corona" loading="lazy"><figcaption class="mono">Through the smoke hole</figcaption></figure>
   </div>
  </article>
 

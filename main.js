@@ -9,13 +9,16 @@ const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 const MOBILE = matchMedia('(max-width:860px)').matches || matchMedia('(hover:none)').matches;
+// LOW = phones / weak devices: no bloom, fewer particles, cheaper sky, lower resolution
+const LOW = MOBILE || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
 const HAS_MOUSE = matchMedia('(hover:hover)').matches;
 
 /* ======================= renderer ======================= */
 const canvas = $('#sky');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
-const DPR = Math.min(devicePixelRatio, MOBILE ? 1.5 : 1.75);
+let DPR = LOW ? Math.min(devicePixelRatio, 1) * .8 : Math.min(devicePixelRatio, 1.75);
 renderer.setPixelRatio(DPR);
+renderer.autoClear = false;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.0;
 
@@ -32,12 +35,13 @@ skyScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMater
   vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }`,
   fragmentShader: /* glsl */`
   precision highp float;
+  #define OCT ${LOW ? 3 : 5}
   varying vec2 vUv;
   uniform float uTime, uScroll, uPower; uniform vec2 uRes, uMouse; uniform vec3 uA, uB, uC;
   float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
   float noise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.-2.*f);
     return mix(mix(hash(i), hash(i+vec2(1,0)), f.x), mix(hash(i+vec2(0,1)), hash(i+vec2(1,1)), f.x), f.y); }
-  float fbm(vec2 p){ float v = 0., a = .5; for(int i=0;i<5;i++){ v += a*noise(p); p = p*2.03 + 7.1; a *= .5; } return v; }
+  float fbm(vec2 p){ float v = 0., a = .5; for(int i=0;i<OCT;i++){ v += a*noise(p); p = p*2.03 + 7.1; a *= .5; } return v; }
   void main(){
     vec2 uv = vUv; float asp = uRes.x / uRes.y; vec2 p = vec2((uv.x - .5) * asp, uv.y);
     float t = uTime * .045;
@@ -97,7 +101,7 @@ skyScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMater
 })));
 
 /* ======================= particles that morph between shapes ======================= */
-const N = MOBILE ? 16000 : 42000;
+const N = LOW ? 9000 : 42000;
 const ptsScene = new THREE.Scene();
 const cam = new THREE.PerspectiveCamera(35, 1, .1, 100); cam.position.set(0, 0, 10);
 const gauss = () => { let u = 0, v = 0; while(!u) u = Math.random(); while(!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
@@ -140,7 +144,7 @@ function word(text){ const a = new Float32Array(N * 3), c = document.createEleme
 const pGeo = new THREE.BufferGeometry();
 const rnd = new Float32Array(N); for(let i = 0; i < N; i++) rnd[i] = Math.random();
 pGeo.setAttribute('rnd', new THREE.BufferAttribute(rnd, 1));
-const pU = { uTime: { value: 0 }, uMorph: { value: 0 }, uPix: { value: DPR }, uSize: { value: MOBILE ? 26 : 20 }, uOp: { value: 1 },
+const pU = { uTime: { value: 0 }, uMorph: { value: 0 }, uPix: { value: DPR }, uSize: { value: LOW ? 30 : 20 }, uOp: { value: 1 },
   uCA: { value: new THREE.Color('#a8ffd8') }, uCB: { value: new THREE.Color('#7fa8ff') } };
 const pMat = new THREE.ShaderMaterial({ uniforms: pU, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
   vertexShader: /* glsl */`
@@ -164,20 +168,28 @@ const pMat = new THREE.ShaderMaterial({ uniforms: pU, transparent: true, depthWr
   uniform vec3 uCA, uCB; uniform float uOp; varying float vR; varying float vA;
   void main(){ vec2 c = gl_PointCoord - .5; float r = length(c); if(r > .5) discard;
     float core = exp(-r * r * 26.); vec3 col = mix(uCA, uCB, vR) * (.55 + core * 1.3) + core * .35;
-    gl_FragColor = vec4(col, core * vA * uOp * .8); }`,
+    gl_FragColor = vec4(col, core * vA * uOp * ${LOW ? '1.25' : '.8'}); }`,
 });
 const cloud = new THREE.Points(pGeo, pMat); cloud.frustumCulled = false;
 const group = new THREE.Group(); group.add(cloud); ptsScene.add(group);
 
 /* ======================= post-processing: bloom ======================= */
-const composer = new EffectComposer(renderer);
-const pass1 = new RenderPass(skyScene, orthoCam); composer.addPass(pass1);
-const pass2 = new RenderPass(ptsScene, cam); pass2.clear = false; pass2.clearDepth = true; composer.addPass(pass2);
-const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), .55, .6, .5); composer.addPass(bloom);
-composer.addPass(new OutputPass());
-function resize(){ const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); composer.setSize(w, h);
-  bloom.resolution.set(w * DPR * .5, h * DPR * .5); skyU.uRes.value.set(w, h); cam.aspect = w / h; cam.updateProjectionMatrix(); }
-addEventListener('resize', resize); resize();
+let useBloom = !LOW, composer = null, bloom = null;
+function makeComposer(){
+  composer = new EffectComposer(renderer);
+  const pass1 = new RenderPass(skyScene, orthoCam); composer.addPass(pass1);
+  const pass2 = new RenderPass(ptsScene, cam); pass2.clear = false; pass2.clearDepth = true; composer.addPass(pass2);
+  bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), .55, .6, .5); composer.addPass(bloom);
+  composer.addPass(new OutputPass());
+}
+if(useBloom) makeComposer();
+function resize(){ const w = innerWidth, h = innerHeight; renderer.setPixelRatio(DPR); renderer.setSize(w, h, false); pU.uPix.value = DPR;
+  if(composer){ composer.setPixelRatio(DPR); composer.setSize(w, h); bloom.resolution.set(w * DPR * .5, h * DPR * .5); }
+  skyU.uRes.value.set(w, h); cam.aspect = w / h; cam.updateProjectionMatrix(); measure(); }
+function draw(dt){
+  if(useBloom) composer.render(dt);
+  else { renderer.clear(); renderer.render(skyScene, orthoCam); renderer.clearDepth(); renderer.render(ptsScene, cam); }
+}
 
 /* ======================= scroll keyframes ======================= */
 const C = s => new THREE.Color(s);
@@ -196,7 +208,7 @@ secs.forEach(s => { s.k.skyC = s.k.sky.map(C); s.k.pcC = s.k.pc.map(C); });
 
 function state(){
   const y = scrollY, vh = innerHeight;
-  const holds = secs.map(s => { const a = s.el.offsetTop - vh * .15, b = s.el.offsetTop + Math.max(0, s.el.offsetHeight - vh) - vh * .15; return [a, b]; });
+  const holds = L.holds;
   let i = 0; while(i < secs.length - 1 && y > holds[i][1]) i++;
   let A = secs[Math.max(0, i - 1)].k, B = secs[i].k, t = 1;
   if(i > 0 && y < holds[i][0]){ t = ease(clamp((y - holds[i - 1][1]) / (holds[i][0] - holds[i - 1][1]))); }
@@ -206,6 +218,18 @@ function state(){
 const cur = { m: 0, op: 0, x: 2.1, y: .95, s: .4, spin: .06, pw: 1 };
 const tmp = new THREE.Color();
 
+/* ======================= cached layout (never read layout inside the frame loop) ======================= */
+const L = { holds: [], vh: innerHeight, docH: 1 };
+function measure(){
+  const vh = innerHeight; L.vh = vh;
+  L.holds = secs.map(s => { const t = s.el.offsetTop, h = s.el.offsetHeight; return [t - vh * .15, t + Math.max(0, h - vh) - vh * .15]; });
+  const g = id => { const e = document.getElementById(id); return [e.offsetTop, e.offsetHeight]; };
+  [L.man, L.dark, L.log, L.sauna, L.hero] = ['manifesto', 'dark', 'log', 'sauna', 'hero'].map(g);
+  L.trackW = document.getElementById('track') ? document.getElementById('track').scrollWidth : 0;
+  L.docH = document.documentElement.scrollHeight;
+}
+addEventListener('resize', resize); resize();
+new ResizeObserver(() => measure()).observe(document.body);
 /* ======================= pointer & light ======================= */
 let mx = innerWidth * .7, my = innerHeight * .3, smx = mx, smy = my, lastMove = 0;
 const dot = $('#dot');
@@ -292,14 +316,27 @@ $('#credits').innerHTML = 'Photos via Wikimedia Commons: ' + CR.map(c => `${c[1]
 /* ======================= main loop ======================= */
 const meterI = $('#meterI'), meterB = $('#meterB');
 const clock = new THREE.Clock();
-let started = false;
+let started = false, hlx = -1, hly = -1, litN = -1, logP = -1, saunaP = -1;
+const lamp = $('#lamp');
+/* adaptive quality: if frames are slow, lower resolution, then switch bloom off */
+let gT = 0, gN = 0, gSettle = 0;
+function govern(dt){
+  if(!started) return;
+  gT += dt; gN++;
+  if(gT < 1.5) return;
+  const avg = gT / gN * 1000; gT = 0; gN = 0;
+  if(gSettle-- > 0) return;
+  if(avg > 24){
+    if(useBloom && DPR <= 1){ useBloom = false; gSettle = 1; return; }
+    if(DPR > .55){ DPR = Math.max(.5, DPR * .8); resize(); gSettle = 1; }
+  }
+}
 function frame(){
   const dt = Math.min(clock.getDelta(), .05), T = clock.elapsedTime, k = 1 - Math.pow(.002, dt);
   // autopilot light when nobody is moving the mouse
   if(!HAS_MOUSE || performance.now() - lastMove > 4000){ mx = innerWidth * (.5 + .35 * Math.sin(T * .35)); my = innerHeight * (.35 + .25 * Math.sin(T * .53)); }
   smx = lerp(smx, mx, 1 - Math.pow(.0005, dt)); smy = lerp(smy, my, 1 - Math.pow(.0005, dt));
-  document.documentElement.style.setProperty('--mx', smx + 'px'); document.documentElement.style.setProperty('--my', smy + 'px');
-  dot.style.transform = `translate(${mx}px,${my}px)`;
+  if(HAS_MOUSE){ lamp.style.transform = `translate(${smx}px,${smy}px)`; dot.style.transform = `translate(${mx}px,${my}px)`; }
   skyU.uMouse.value.set(smx / innerWidth, 1 - smy / innerHeight);
   skyU.uTime.value = T; pU.uTime.value = T;
   skyU.uScroll.value = scrollY / innerHeight;
@@ -314,37 +351,40 @@ function frame(){
   group.scale.setScalar(cur.s);
   group.rotation.y += cur.spin * dt * 2.2; if(cur.spin < .01) group.rotation.y = lerp(group.rotation.y, Math.round(group.rotation.y / (Math.PI * 2)) * Math.PI * 2, k);
 
-  // hero shadow
-  heroLight(smx, smy);
+  // hero shadow: only while the hero is on screen and the light actually moved
+  if(scrollY < L.vh && (Math.abs(smx - hlx) + Math.abs(smy - hly) > (LOW ? 6 : .8))){ hlx = smx; hly = smy; heroLight(smx, smy); }
 
   // manifesto
-  { const r = $('#manifesto'), p = clamp((scrollY - r.offsetTop + innerHeight * .3) / (r.offsetHeight - innerHeight * .7));
-    const lit = p * words.length * 1.08; words.forEach((w, i) => { const on = i < lit; w.classList.toggle('on', on); w.classList.toggle('hot', on && w.classList.contains('h')); }); }
+  { const p = clamp((scrollY - L.man[0] + L.vh * .3) / (L.man[1] - L.vh * .7)), lit = Math.ceil(p * words.length * 1.08);
+    if(lit !== litN){ litN = lit; words.forEach((w, i) => { const on = i < lit; w.classList.toggle('on', on); w.classList.toggle('hot', on && w.classList.contains('h')); }); } }
 
   // flashlight
-  { const r = dark.getBoundingClientRect();
-    if(r.bottom > 0 && r.top < innerHeight){
+  { const top = L.dark[0] - scrollY;
+    if(top + L.dark[1] > 0 && top < L.vh){
       if(!HAS_MOUSE || performance.now() - lastMove > 2500){ ftx = .5 + .32 * Math.sin(T * .6); fty = .5 + .25 * Math.sin(T * .9 + 1); }
       fx = lerp(fx, ftx, 1 - Math.pow(.001, dt)); fy = lerp(fy, fty, 1 - Math.pow(.001, dt));
       const speed = Math.hypot(ftx - fx, fty - fy); fr = lerp(fr, (MOBILE ? 190 : 300) + speed * 600, k);
       darkPh.style.setProperty('--fx', fx * 100 + '%'); darkPh.style.setProperty('--fy', fy * 100 + '%'); darkPh.style.setProperty('--r', fr + 'px'); } }
 
   // horizontal log
-  { const p = clamp((scrollY - log.offsetTop) / (log.offsetHeight - innerHeight)); track.style.transform = `translate3d(${-p * Math.max(0, track.scrollWidth - innerWidth)}px,0,0)`; }
+  { const p = clamp((scrollY - L.log[0]) / (L.log[1] - L.vh)); if(p !== logP){ logP = p; track.style.transform = `translate3d(${-p * Math.max(0, L.trackW - innerWidth)}px,0,0)`; } }
 
   // sauna
-  { const p = clamp((scrollY - sauna.offsetTop) / (sauna.offsetHeight - innerHeight));
+  { const p = clamp((scrollY - L.sauna[0]) / (L.sauna[1] - L.vh)); if(p !== saunaP){ saunaP = p;
     saunaPin.style.setProperty('--c', (7 + 80 * ease(clamp(p / .7))) + '%'); saunaPin.style.setProperty('--z', (1.3 - .3 * ease(clamp(p / .8))).toFixed(3));
-    saunaPin.style.setProperty('--o', clamp((p - .55) / .3).toFixed(3)); saunaPin.style.setProperty('--o2', clamp(p / .35).toFixed(3)); }
+    saunaPin.style.setProperty('--o', clamp((p - .55) / .3).toFixed(3)); saunaPin.style.setProperty('--o2', clamp(p / .35).toFixed(3)); } }
 
   // peek follows cursor
-  px = lerp(px, mx + 40, 1 - Math.pow(.0008, dt)); py = lerp(py, my, 1 - Math.pow(.0008, dt)); peek.style.left = px + 'px'; peek.style.top = py + 'px';
+  if(HAS_MOUSE && peek.classList.contains('on')){ px = lerp(px, mx + 40, 1 - Math.pow(.0008, dt)); py = lerp(py, my, 1 - Math.pow(.0008, dt)); peek.style.left = px + 'px'; peek.style.top = py + 'px'; }
 
   // night meter 22:00 → 04:00
-  { const p = clamp(scrollY / (document.documentElement.scrollHeight - innerHeight)); meterI.style.height = p * 100 + '%';
+  if(!MOBILE){ const p = clamp(scrollY / (L.docH - L.vh)); meterI.style.height = p * 100 + '%';
     const mins = 22 * 60 + p * 360; meterB.style.top = p * 100 + '%'; meterB.textContent = `${String(Math.floor(mins / 60) % 24).padStart(2, '0')}:${String(Math.floor(mins % 60)).padStart(2, '0')}`; }
 
-  composer.render(dt);
+  // skip the WebGL work while a full-screen opaque section covers the canvas
+  const covered = (scrollY >= L.dark[0] && scrollY + L.vh <= L.dark[0] + L.dark[1]) || (saunaP > .62 && saunaP < 1);
+  if(!covered) draw(dt);
+  govern(dt);
   requestAnimationFrame(frame);
 }
 
@@ -356,6 +396,8 @@ document.fonts.load('800 300px Syne').then(() => document.fonts.ready).then(() =
   pGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(N * 3), 3));
   renderer.compile(skyScene, orthoCam); renderer.compile(ptsScene, cam);
   frame();
-  setTimeout(() => { clearInterval(iv); introN.textContent = 'darkness 100%'; setTimeout(() => { $('#intro').classList.add('gone'); started = true; }, 250); }, 700);
+  const seen = sessionStorage.getItem('pol-intro');
+  sessionStorage.setItem('pol-intro', '1');
+  setTimeout(() => { clearInterval(iv); introN.textContent = 'darkness 100%'; setTimeout(() => { $('#intro').classList.add('gone'); started = true; measure(); }, seen ? 0 : 250); }, seen ? 0 : 700);
 });
 window.__pol = { cur, KF };

@@ -5,12 +5,13 @@ const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 const MOBILE = matchMedia('(max-width:860px)').matches || matchMedia('(hover:none)').matches;
 const HAS_MOUSE = matchMedia('(hover:hover)').matches;
+const LOW = MOBILE || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
 
 /* ---------- aurora sky (same shader as the home page, lighter) ---------- */
 const canvas = $('#sky');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
 const DPR = Math.min(devicePixelRatio, MOBILE ? 1 : 1.25);
-renderer.setPixelRatio(DPR);
+renderer.setPixelRatio(LOW ? .5 : DPR);
 const scene = new THREE.Scene(), cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 const skyU = {
   uTime: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) }, uMouse: { value: new THREE.Vector2(.5, .5) },
@@ -22,12 +23,13 @@ scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial
   vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }`,
   fragmentShader: `
   precision highp float;
+  #define OCT ${LOW ? 3 : 5}
   varying vec2 vUv;
   uniform float uTime, uScroll, uPower; uniform vec2 uRes, uMouse; uniform vec3 uA, uB, uC;
   float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
   float noise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.-2.*f);
     return mix(mix(hash(i), hash(i+vec2(1,0)), f.x), mix(hash(i+vec2(0,1)), hash(i+vec2(1,1)), f.x), f.y); }
-  float fbm(vec2 p){ float v = 0., a = .5; for(int i=0;i<5;i++){ v += a*noise(p); p = p*2.03 + 7.1; a *= .5; } return v; }
+  float fbm(vec2 p){ float v = 0., a = .5; for(int i=0;i<OCT;i++){ v += a*noise(p); p = p*2.03 + 7.1; a *= .5; } return v; }
   void main(){
     vec2 uv = vUv; float asp = uRes.x / uRes.y; vec2 p = vec2((uv.x - .5) * asp, uv.y);
     float t = uTime * .045;
@@ -114,7 +116,7 @@ heroes.forEach(h => h.addEventListener('pointermove', e => { const r = h.getBoun
 
 /* ---------- lightbox ---------- */
 const lb = $('#lb'), lbImg = lb.querySelector('img'), lbC = lb.querySelector('.c');
-document.querySelectorAll('.gal figure').forEach(f => f.addEventListener('click', () => { const i = f.querySelector('img'); lbImg.src = i.src; lbImg.alt = i.alt; lbC.textContent = f.querySelector('figcaption').textContent; lb.classList.add('on'); }));
+document.querySelectorAll('.gal figure').forEach(f => f.addEventListener('click', () => { const i = f.querySelector('img'); lbImg.src = i.src.replace('-800.webp', '-1600.webp'); lbImg.alt = i.alt; lbC.textContent = f.querySelector('figcaption').textContent; lb.classList.add('on'); }));
 lb.addEventListener('click', () => lb.classList.remove('on'));
 addEventListener('keydown', e => { if(e.key === 'Escape') lb.classList.remove('on'); });
 
@@ -172,6 +174,7 @@ if(location.hash && ROOMS[location.hash.slice(1)]) room = location.hash.slice(1)
 calc();
 
 /* ---------- loop ---------- */
+let skip = false;
 const clock = new THREE.Clock(), tmp = new THREE.Color();
 function frame(){
   const dt = Math.min(clock.getDelta(), .05), T = clock.elapsedTime, k = 1 - Math.pow(.02, dt);
@@ -179,9 +182,10 @@ function frame(){
   smx = lerp(smx, mx, k); smy = lerp(smy, my, k);
   skyU.uTime.value = T; skyU.uScroll.value = scrollY / innerHeight * .3; skyU.uMouse.value.set(smx / innerWidth, 1 - smy / innerHeight);
   const z = zoneNow(); ['uA', 'uB', 'uC'].forEach((u, j) => skyU[u].value.lerp(z.c[j], k * .6)); skyU.uPower.value = lerp(skyU.uPower.value, z.p, k * .6);
-  for(const h of heroes){ const r = h.getBoundingClientRect(); if(r.bottom < 0 || r.top > innerHeight) continue;
+  if(!MOBILE) for(const h of heroes){ const r = h.getBoundingClientRect(); if(r.bottom < 0 || r.top > innerHeight) continue;
     const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; h.querySelector('img').style.setProperty('--par', (p * -60).toFixed(1) + 'px'); }
-  renderer.render(scene, cam);
+  // the sky moves slowly: on phones 30 fps is plenty and halves the GPU work
+  if(!LOW || (skip = !skip)) renderer.render(scene, cam);
   requestAnimationFrame(frame);
 }
 frame();
