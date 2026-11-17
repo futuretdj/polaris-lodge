@@ -7,6 +7,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Polaris — aurora hotel in Inari, Finnish Lapland</title>
 <meta name="description" content="Twelve glass rooms at the edge of the tree line in Inari, Finnish Lapland. We switch off the lights at nine. The sky does the rest.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Polaris — aurora hotel in Inari, Finnish Lapland">
+<meta property="og:description" content="Twelve glass-roofed rooms at the edge of the tree line. We switch off the lights at nine. The sky does the rest.">
+<meta property="og:image" content="https://futuretdj.github.io/polaris-lodge/og.jpg">
+<meta property="og:url" content="https://futuretdj.github.io/polaris-lodge/">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#04060d">
 <link rel="preload" href="fonts/syne.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -148,6 +156,43 @@ main{position:relative;z-index:3}
 .ifoot{display:flex;gap:28px;flex-wrap:wrap;margin-top:22px;color:var(--dim)}
 .ifoot a{color:var(--glow);text-decoration:none;border-bottom:1px solid currentColor}
 @media (max-width:860px){#incl .ih{grid-template-columns:1fr;gap:18px}.ig{grid-template-columns:1fr}.ig div{border-right:0!important;padding-left:0!important}}
+
+#guests{padding-top:18vh;padding-bottom:6vh}
+#guests .gh{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:6vh}
+#guests h2,#route h2{font:700 clamp(40px,5vw,84px)/.95 Syne;letter-spacing:-.04em}
+.score{display:flex;align-items:center;gap:16px}
+.score b{font:800 clamp(64px,7vw,110px)/.8 Syne;letter-spacing:-.05em}
+.score .stars{display:block;color:var(--lamp);font-size:22px;letter-spacing:4px}
+.score .mono{color:var(--dim)}
+.gbook{columns:3 300px;column-gap:clamp(14px,2vw,28px)}
+.note{break-inside:avoid;margin:0 0 clamp(14px,2vw,28px);padding:26px 24px 20px;border:1px solid var(--hair);background:linear-gradient(160deg,rgba(255,255,255,.035),rgba(255,255,255,0));position:relative;overflow:hidden;transition:border-color .4s,transform .6s cubic-bezier(.2,.7,.2,1)}
+.note:before{content:"“";position:absolute;right:16px;top:-8px;font:800 110px/1 Syne;color:rgba(138,245,192,.09)}
+.note:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--nx,50%) var(--ny,0%),rgba(138,245,192,.14),transparent 55%);opacity:0;transition:opacity .4s;pointer-events:none}
+.note:hover{border-color:rgba(138,245,192,.4);transform:translateY(-4px)}
+.note:hover:after{opacity:1}
+.note blockquote{font:400 clamp(17px,1.35vw,20px)/1.5 Inter;color:var(--paper)}
+.note figcaption{margin-top:16px;color:var(--dim)}
+.note figcaption b{color:var(--glow);font-weight:400;margin-right:8px}
+.rvjs .gbook .note{opacity:0;transform:translateY(26px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1),border-color .4s}
+.gbook.in .note{opacity:1;transform:none}
+.gbook.in .note:nth-child(2){transition-delay:.08s}.gbook.in .note:nth-child(3){transition-delay:.16s}.gbook.in .note:nth-child(4){transition-delay:.24s}.gbook.in .note:nth-child(5){transition-delay:.32s}.gbook.in .note:nth-child(6){transition-delay:.4s}
+#route{padding-top:16vh;padding-bottom:4vh}
+.rt{margin-top:5vh}
+#rsvg{width:100%;height:auto;overflow:visible}
+#rsvg text{font:400 12px Plex;letter-spacing:.1em;fill:rgba(236,235,228,.7);text-anchor:middle}
+#rsvg .pt{opacity:0;transition:opacity .6s var(--d)}
+#rsvg .pt circle{fill:#04060d;stroke:#8af5c0;stroke-width:1.5}
+#rsvg .pt.end circle{fill:#8af5c0;filter:drop-shadow(0 0 8px #8af5c0)}
+.rt.in #rsvg .pt{opacity:1}
+#rpath{stroke-dasharray:var(--len,1200);stroke-dashoffset:var(--len,1200);transition:stroke-dashoffset 2.2s cubic-bezier(.6,0,.2,1)}
+.rt.in #rpath{stroke-dashoffset:0}
+.legs{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--hair);margin-top:3vh}
+.legs div{padding:22px 22px 0 0}
+.legs div+div{padding-left:22px;border-left:1px solid var(--hair)}
+.legs .mono{color:var(--glow)}
+.legs b{display:block;font:700 clamp(30px,3vw,46px)/1 Syne;letter-spacing:-.03em;margin:8px 0}
+.legs p{color:var(--dim);font-size:15.5px}
+@media (max-width:860px){.legs{grid-template-columns:1fr}.legs div+div{padding-left:0;border-left:0;border-top:1px solid var(--hair);margin-top:18px}#rsvg text{font-size:20px}}
 /* close */
 #close{min-height:100vh;display:grid;grid-template-columns:1.25fr 1fr;gap:6vw;align-items:end;padding-top:34vh;padding-bottom:12vh}
 #close h2{font:800 clamp(56px,9vw,160px)/.82 Syne;letter-spacing:-.055em}
@@ -194,6 +239,29 @@ footer a{color:var(--dim)}
 }
 @media (prefers-reduced-motion:reduce){.rvjs .rv{transition:none;opacity:1;transform:none}#grain,.ticker div{animation:none}}
 @media (max-width:860px),(hover:none){#grain{display:none}.top.sc{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(4,6,13,.94)!important}}
+
+/* mobile menu */
+#mbtn{display:none;background:none;border:1px solid var(--hair);color:var(--paper);padding:8px 14px;cursor:pointer;position:relative;z-index:71}
+#mbtn i{display:inline-block;width:14px;height:8px;margin-left:8px;border-top:1px solid currentColor;border-bottom:1px solid currentColor;vertical-align:middle;transition:transform .4s}
+body.mopen #mbtn i{transform:scaleY(0)}
+#mnav{position:fixed;inset:0;z-index:70;background:radial-gradient(120% 70% at 50% 0%,rgba(60,240,160,.22),transparent 60%),radial-gradient(90% 60% at 100% 30%,rgba(150,90,255,.22),transparent 60%),#04060d;display:flex;flex-direction:column;justify-content:flex-end;padding:90px 22px 34px;clip-path:circle(0 at calc(100% - 46px) 34px);transition:clip-path .7s cubic-bezier(.7,0,.2,1);pointer-events:none}
+body.mopen #mnav{clip-path:circle(150% at calc(100% - 46px) 34px);pointer-events:auto}
+#mnav a{display:block;font:800 clamp(30px,9vw,56px)/1.04 Syne;letter-spacing:-.045em;color:var(--paper);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--hair);opacity:0;transform:translateY(30px);transition:opacity .5s,transform .6s cubic-bezier(.2,.7,.2,1),color .3s}
+#mnav a small{display:block;font:400 11px Plex;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
+#mnav a.cur{color:var(--glow)}
+body.mopen #mnav a{opacity:1;transform:none}
+body.mopen #mnav a:nth-child(2){transition-delay:.06s}body.mopen #mnav a:nth-child(3){transition-delay:.12s}body.mopen #mnav a:nth-child(4){transition-delay:.18s}
+#mnav .mfoot{margin-top:26px;color:var(--dim);display:flex;justify-content:space-between;gap:10px;opacity:0;transition:opacity .5s .25s}
+body.mopen #mnav .mfoot{opacity:1}
+body.mopen{overflow:hidden}
+.top{z-index:72}
+#bbar{position:fixed;left:10px;right:10px;max-width:calc(100vw - 20px);box-sizing:border-box;bottom:10px;z-index:40;display:none;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 12px 16px;background:rgba(10,14,24,.96);border:1px solid var(--hair);transform:translateY(140%);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+#bbar.on{transform:none}
+#bbar span{color:var(--dim)}
+#bbar b{display:block;font:700 19px Syne;color:var(--paper);letter-spacing:-.02em}
+#bbar a{background:var(--glow);color:#04060d;text-decoration:none;font:700 13px Syne;padding:13px 16px;white-space:nowrap}
+@media (max-width:860px){#mbtn{display:inline-block}#bbar{display:flex}.top .right>a{display:none!important}}
+a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
 </style>
 <script type="importmap">{"imports":{"three":"./lib/three.module.min.js","three/addons/":"./lib/"}}</script>
 <script type="speculationrules">{"prefetch":[{"source":"list","urls":["index.html","rooms.html","experiences.html"],"eagerness":"moderate"}]}</script>
@@ -205,11 +273,12 @@ footer a{color:var(--dim)}
 <div class="top">
  <a class="mark" href="#hero"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 1v18M1 10h18M4 4l12 12M16 4L4 16"/></svg>Polaris</a>
  <div class="mid mono" id="clock">Inari · --:--</div>
- <div class="right mono"><a class="l" href="#log">Night log</a><a class="l" href="rooms.html">Rooms &amp; prices</a><a class="l" href="experiences.html">Experiences</a><a class="l" href="rooms.html#book">Book</a></div>
+ <div class="right mono"><a class="l" href="#log">Night log</a><a class="l" href="rooms.html">Rooms &amp; prices</a><a class="l" href="experiences.html">Experiences</a><a class="l" href="rooms.html#book">Book</a><button id="mbtn" class="mono" aria-expanded="false" aria-controls="mnav">Menu<i></i></button></div>
 </div>
 <div class="side mono">68°54′N 27°01′E — Inari, Sápmi</div>
 <div class="meter"><i id="meterI"></i><b class="mono" id="meterB">22:00</b></div>
 
+<nav id="mnav" aria-label="Menu"><a href="index.html" class="cur"><small>Polaris · Inari</small>The hotel</a><a href="rooms.html"><small>4 types · from €380</small>Rooms</a><a href="experiences.html"><small>Trips · dinner · aurora guide</small>Experiences</a><a href="rooms.html#book"><small>Plan your nights</small>Book</a><div class="mfoot mono"><span>68°54′N 27°01′E</span><span>hello@polaris.example</span></div></nav>
 <main>
  <section id="hero">
   <div class="read mono">
@@ -283,7 +352,42 @@ footer a{color:var(--dim)}
   <div class="ifoot rv mono"><span>Dinner €58 · excursions from €70 · children under 6 free</span><a href="rooms.html#included">All details →</a><a href="experiences.html#trips">Excursions →</a></div>
  </section>
 
+ <section id="guests" class="wrap">
+  <div class="gh">
+   <h2 class="rv"><span class="sweep">From the<br>guest book</span></h2>
+   <div class="score rv"><b>4.9</b><div><span class="stars" aria-label="4.9 out of 5">★★★★★</span><span class="mono">312 reviews · Google, Booking, Tripadvisor</span></div></div>
+  </div>
+  <div class="gbook rv" id="gbook">
+   <figure class="note"><blockquote>We almost cancelled because of the forecast. On the third night the phone rang at 00:40 and we stood on the frozen lake in our pyjamas and overalls, crying. Worth every euro.</blockquote><figcaption class="mono"><b>Ana &amp; Rui</b> Lisbon · Glass Room · Jan 2026</figcaption></figure>
+   <figure class="note"><blockquote>The smoke sauna and the hole in the ice changed something in me. I didn’t think I could do it. I did it three times.</blockquote><figcaption class="mono"><b>Hannah</b> Hamburg · Kota Loft · Feb 2026</figcaption></figure>
+   <figure class="note"><blockquote>Mika spent two hours with our 12-year-old at the telescope. She now wants to be an astronomer. Thank you for that.</blockquote><figcaption class="mono"><b>The Okafors</b> London · Observer’s Room · Mar 2026</figcaption></figure>
+   <figure class="note"><blockquote>Quiet, warm, honest. No show, no loud music, just the forest and the sky. The reindeer dinner was the best meal of our trip.</blockquote><figcaption class="mono"><b>Tomás</b> Valencia · Shore Cabin · Dec 2025</figcaption></figure>
+   <figure class="note"><blockquote>Five nights, aurora on four of them. On the last one the whole sky turned red. The night host said she sees that twice a year.</blockquote><figcaption class="mono"><b>Yuki</b> Osaka · Glass Room · Oct 2025</figcaption></figure>
+   <figure class="note"><blockquote>Everything was thought through, down to the red reading lights and the boots that were already my size when I arrived.</blockquote><figcaption class="mono"><b>Laura</b> Vilnius · Glass Room · Feb 2026</figcaption></figure>
+  </div>
+ </section>
+
  <div class="ticker" aria-hidden="true"><div><span>200 aurora nights a year</span><em>✳</em><span>−31 °C, coldest night last winter</span><em>✳</em><span>0 streetlights</span><em>✳</em><span>9 h of darkness in November</span><em>✳</em><span>1 knock on your door</span><em>✳</em></div><div><span>200 aurora nights a year</span><em>✳</em><span>−31 °C, coldest night last winter</span><em>✳</em><span>0 streetlights</span><em>✳</em><span>9 h of darkness in November</span><em>✳</em><span>1 knock on your door</span><em>✳</em></div></div>
+
+ <section id="route" class="wrap">
+  <h2 class="rv">Further than<br>you think. Easier<br>than you think.</h2>
+  <div class="rt rv">
+   <svg id="rsvg" viewBox="0 0 900 340" aria-hidden="true">
+    <defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#ffb36b"/><stop offset=".6" stop-color="#8af5c0"/><stop offset="1" stop-color="#b98cff"/></linearGradient></defs>
+    <path id="rpath" d="M60 300 C 240 300, 300 120, 520 110 S 760 90, 840 40" fill="none" stroke="url(#rg)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M60 300 C 240 300, 300 120, 520 110 S 760 90, 840 40" fill="none" stroke="rgba(236,235,228,.12)" stroke-width="1" stroke-dasharray="3 7"/>
+    <g class="pt" style="--d:0s"><circle cx="60" cy="300" r="6"/><text x="60" y="330">HELSINKI</text></g>
+    <g class="pt" style="--d:.9s"><circle cx="520" cy="110" r="6"/><text x="520" y="148">IVALO AIRPORT</text></g>
+    <g class="pt end" style="--d:1.5s"><circle cx="840" cy="40" r="8"/><text x="840" y="78" text-anchor="end">POLARIS</text></g>
+    <circle id="plane" r="4" fill="#fff"/>
+   </svg>
+   <div class="legs">
+    <div><span class="mono">Leg 1 · by air</span><b>1 h 40 min</b><p>Helsinki → Ivalo. Several flights a day in winter; direct flights from Frankfurt, Zurich, Paris and London in season.</p></div>
+    <div><span class="mono">Leg 2 · our car</span><b>40 min</b><p>We meet you at arrivals with a sign and a thermos of tea. The road follows the lake through the forest.</p></div>
+    <div><span class="mono">Or by road</span><b>3 h 30 min</b><p>From Rovaniemi on the E75, cleared all winter. Free parking, plug-in heaters for your car.</p></div>
+   </div>
+  </div>
+ </section>
 
  <section id="close" class="wrap">
   <h2 class="rv">The night<br>is the show.</h2>
@@ -314,6 +418,24 @@ footer a{color:var(--dim)}
  check();setTimeout(check,300);setTimeout(check,1200);
  // safety net: if anything is still hidden after 4 s above the fold, show it
  setTimeout(function(){els.forEach(function(e){if(e.getBoundingClientRect().top<innerHeight)show(e)})},4000);
+})();
+</script>
+<script>
+(function(){var b=document.getElementById('mbtn');if(!b)return;
+ b.addEventListener('click',function(){var o=document.body.classList.toggle('mopen');b.setAttribute('aria-expanded',o);b.firstChild.textContent=o?'Close':'Menu'});
+ [].forEach.call(document.querySelectorAll('#mnav a'),function(a){a.addEventListener('click',function(){document.body.classList.remove('mopen');b.firstChild.textContent='Menu'})});
+ var bar=document.getElementById('bbar'),stop=document.getElementById('book');
+ function u(){if(!bar)return;var h=innerHeight,near=stop&&stop.getBoundingClientRect().top<h;bar.classList.toggle('on',scrollY>h*.8&&!near)}
+ addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+ [].forEach.call(document.querySelectorAll('.note'),function(n){n.addEventListener('pointermove',function(e){var r=n.getBoundingClientRect();n.style.setProperty('--nx',(e.clientX-r.left)/r.width*100+'%');n.style.setProperty('--ny',(e.clientY-r.top)/r.height*100+'%')})});
+ var p=document.getElementById('rpath'),pl=document.getElementById('plane'),rt=document.querySelector('.rt');if(!p)return;
+ var L=p.getTotalLength();p.style.setProperty('--len',L);
+ var started=false;function fly(t0){var d=(performance.now()-t0)/2600;if(d>1)d=1;var e=d<.5?2*d*d:1-Math.pow(-2*d+2,2)/2;var pt=p.getPointAtLength(L*e);pl.setAttribute('cx',pt.x);pl.setAttribute('cy',pt.y);if(d<1)requestAnimationFrame(function(){fly(t0)})}
+ pl.setAttribute('cx',60);pl.setAttribute('cy',300);
+ new MutationObserver(function(){if(rt.classList.contains('in')&&!started){started=true;var t=performance.now();fly(t)}}).observe(rt,{attributes:true,attributeFilter:['class']});
 })();
 </script>
 <script type="module" src="main.js"></script>

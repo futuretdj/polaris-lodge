@@ -7,6 +7,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Experiences, dining & aurora guide — Polaris hotel, Inari</title>
 <meta name="description" content="Husky safaris, reindeer evenings, aurora photo nights, ice fishing and Sámi culture. Our restaurant menu, an honest guide to the northern lights and what each month in Inari is like.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Experiences — Polaris aurora hotel">
+<meta property="og:description" content="Husky safaris, reindeer evenings, aurora photo nights, dinner at Kammi and an honest aurora guide.">
+<meta property="og:image" content="https://futuretdj.github.io/polaris-lodge/og.jpg">
+<meta property="og:url" content="https://futuretdj.github.io/polaris-lodge/experiences.html">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#04060d">
 <link rel="preload" href="fonts/syne.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -219,6 +227,30 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
 }
 @media (prefers-reduced-motion:reduce){.rvjs .rv{transition:none;opacity:1;transform:none}#grain{animation:none}}
 @media (max-width:860px),(hover:none){#grain{display:none}.top.sc{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(4,6,13,.94)!important}}
+
+/* mobile menu */
+#mbtn{display:none;background:none;border:1px solid var(--hair);color:var(--paper);padding:8px 14px;cursor:pointer;position:relative;z-index:71}
+#mbtn i{display:inline-block;width:14px;height:8px;margin-left:8px;border-top:1px solid currentColor;border-bottom:1px solid currentColor;vertical-align:middle;transition:transform .4s}
+body.mopen #mbtn i{transform:scaleY(0)}
+#mnav{position:fixed;inset:0;z-index:70;background:radial-gradient(120% 70% at 50% 0%,rgba(60,240,160,.22),transparent 60%),radial-gradient(90% 60% at 100% 30%,rgba(150,90,255,.22),transparent 60%),#04060d;display:flex;flex-direction:column;justify-content:flex-end;padding:90px 22px 34px;clip-path:circle(0 at calc(100% - 46px) 34px);transition:clip-path .7s cubic-bezier(.7,0,.2,1);pointer-events:none}
+body.mopen #mnav{clip-path:circle(150% at calc(100% - 46px) 34px);pointer-events:auto}
+#mnav a{display:block;font:800 clamp(30px,9vw,56px)/1.04 Syne;letter-spacing:-.045em;color:var(--paper);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--hair);opacity:0;transform:translateY(30px);transition:opacity .5s,transform .6s cubic-bezier(.2,.7,.2,1),color .3s}
+#mnav a small{display:block;font:400 11px Plex;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
+#mnav a.cur{color:var(--glow)}
+body.mopen #mnav a{opacity:1;transform:none}
+body.mopen #mnav a:nth-child(2){transition-delay:.06s}body.mopen #mnav a:nth-child(3){transition-delay:.12s}body.mopen #mnav a:nth-child(4){transition-delay:.18s}
+#mnav .mfoot{margin-top:26px;color:var(--dim);display:flex;justify-content:space-between;gap:10px;opacity:0;transition:opacity .5s .25s}
+body.mopen #mnav .mfoot{opacity:1}
+body.mopen{overflow:hidden}
+.top{z-index:72}
+#bbar{position:fixed;left:10px;right:10px;max-width:calc(100vw - 20px);box-sizing:border-box;bottom:10px;z-index:40;display:none;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 12px 16px;background:rgba(10,14,24,.96);border:1px solid var(--hair);transform:translateY(140%);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+#bbar.on{transform:none}
+#bbar span{color:var(--dim)}
+#bbar b{display:block;font:700 19px Syne;color:var(--paper);letter-spacing:-.02em}
+#bbar a{background:var(--glow);color:#04060d;text-decoration:none;font:700 13px Syne;padding:13px 16px;white-space:nowrap}
+@media (max-width:860px){#mbtn{display:inline-block}#bbar{display:flex}.top .right>a{display:none!important}}
+a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
+@media (max-width:860px){.x>button{grid-template-columns:30px minmax(0,1fr) 30px}.x h3{font-size:clamp(24px,7.4vw,40px);overflow-wrap:anywhere}#intro h1{font-size:clamp(52px,15vw,90px)}h2.big{font-size:clamp(40px,11.5vw,64px)}}
 </style>
 <script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
 <script type="speculationrules">{"prefetch":[{"source":"list","urls":["index.html","rooms.html","experiences.html"],"eagerness":"moderate"}]}</script>
@@ -228,9 +260,11 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
 <div class="top">
  <a class="mark" href="index.html"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 1v18M1 10h18M4 4l12 12M16 4L4 16"/></svg>Polaris</a>
  <div class="mid mono">Aurora hotel · Inari</div>
- <div class="right mono"><a href="index.html">The hotel</a><a href="rooms.html">Rooms</a><a class="cur" href="experiences.html">Experiences</a><a href="rooms.html#book">Book</a></div>
+ <div class="right mono"><a href="index.html">The hotel</a><a href="rooms.html">Rooms</a><a class="cur" href="experiences.html">Experiences</a><a href="rooms.html#book">Book</a><button id="mbtn" class="mono" aria-expanded="false" aria-controls="mnav">Menu<i></i></button></div>
 </div>
 
+<nav id="mnav" aria-label="Menu"><a href="index.html"><small>Polaris · Inari</small>The hotel</a><a href="rooms.html"><small>4 types · from €380</small>Rooms</a><a href="experiences.html" class="cur"><small>Trips · dinner · aurora guide</small>Experiences</a><a href="rooms.html#book"><small>Plan your nights</small>Book</a><div class="mfoot mono"><span>68°54′N 27°01′E</span><span>hello@polaris.example</span></div></nav>
+<div id="bbar" class="mono"><span>Rooms from<b>€380 / night</b></span><a href="rooms.html#book">Plan my stay →</a></div>
 <main>
  <section id="intro" class="wrap">
   <div>
@@ -463,6 +497,14 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
  // safety net: if anything is still hidden after 4 s above the fold, show it
  setTimeout(function(){els.forEach(function(e){if(e.getBoundingClientRect().top<innerHeight)show(e)})},4000);
 })();
+</script>
+<script>
+(function(){var b=document.getElementById('mbtn');if(!b)return;
+ b.addEventListener('click',function(){var o=document.body.classList.toggle('mopen');b.setAttribute('aria-expanded',o);b.firstChild.textContent=o?'Close':'Menu'});
+ [].forEach.call(document.querySelectorAll('#mnav a'),function(a){a.addEventListener('click',function(){document.body.classList.remove('mopen');b.firstChild.textContent='Menu'})});
+ var bar=document.getElementById('bbar'),stop=document.getElementById('book');
+ function u(){if(!bar)return;var h=innerHeight,near=stop&&stop.getBoundingClientRect().top<h;bar.classList.toggle('on',scrollY>h*.8&&!near)}
+ addEventListener('scroll',u,{passive:true});u();})();
 </script>
 <script type="module" src="experiences.js"></script>
 </body>

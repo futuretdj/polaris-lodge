@@ -200,9 +200,12 @@ const KF = {
   log:       { m: 2, op: .55, x: 0,    y: 1.9, s: 1,   spin: 0,   sky: ['#ff4fa3', '#6a4cff', '#3cf0b0'], pc: ['#ffc2e4', '#9bffd8'], pw: 1.1 },
   sauna:     { m: 2, op: 0,   x: 0,    y: 1.9, s: 1,   spin: 0,   sky: ['#ff9d4a', '#c43a6a', '#ffd27a'], pc: ['#ffd6a8', '#ff8fb0'], pw: .7 },
   rooms:     { m: 3, op: .5,  x: 3.4,  y: 2.0, s: .5, spin: .05, sky: ['#8fe8ff', '#4a6cff', '#e0f0ff'], pc: ['#e6fbff', '#8fb6ff'], pw: .85 },
+  incl:      { m: 3, op: .3,  x: 3.4,  y: 2.0, s: .5,  spin: .05, sky: ['#8fe8ff', '#4a6cff', '#e0f0ff'], pc: ['#e6fbff', '#8fb6ff'], pw: .7 },
+  guests:    { m: 3, op: 0,   x: 3.4,  y: 2.0, s: .5,  spin: .05, sky: ['#ffb36b', '#c43a6a', '#ffd27a'], pc: ['#ffd6a8', '#ff8fb0'], pw: .6 },
+  route:     { m: 4, op: 0,   x: 2.3,  y: 2.08, s: .5, spin: 0,   sky: ['#45e6ff', '#3a4cff', '#9d6bff'], pc: ['#c8ffe6', '#d6a8ff'], pw: .8 },
   close:     { m: 4, op: .9, x: 2.3,  y: 2.08, s: .5, spin: 0,   sky: ['#3cf0a0', '#b05cff', '#ff7ab8'], pc: ['#c8ffe6', '#d6a8ff'], pw: 1.25 },
 };
-const MOBK = { hero: { x: 0, y: 1.65, s: .62 }, manifesto: { x: 0, y: 2.0, s: .45, op: .5 }, log: { y: 2.2, s: .7 }, rooms: { x: 0, y: 2.1, s: .5, op: .45 }, close: { x: 0, y: 2.3, s: .33, op: .3 } };
+const MOBK = { incl: { x: 0, y: 2.3, s: .4, op: .15 }, hero: { x: 0, y: 1.65, s: .62 }, manifesto: { x: 0, y: 2.0, s: .45, op: .5 }, log: { y: 2.2, s: .7 }, rooms: { x: 0, y: 2.1, s: .5, op: .45 }, close: { x: 0, y: 2.3, s: .33, op: .3 } };
 const secs = Object.keys(KF).map(id => ({ id, el: document.getElementById(id), k: { ...KF[id], ...(MOBILE ? MOBK[id] || {} : {}) } }));
 secs.forEach(s => { s.k.skyC = s.k.sky.map(C); s.k.pcC = s.k.pc.map(C); });
 
