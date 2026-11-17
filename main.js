@@ -291,7 +291,7 @@ $('#form').addEventListener('submit', e => { e.preventDefault(); $('#sent').text
 
 /* reveals */
 const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
-document.querySelectorAll('.rv,.sweep').forEach(el => io.observe(el));
+/* reveals handled by the inline script in the page */
 
 /* clock + sky facts (Inari: 68.9°N, 27.0°E) */
 function sky(){

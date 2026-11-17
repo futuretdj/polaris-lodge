@@ -101,7 +101,7 @@ const dot = $('#dot'); let mx = innerWidth / 2, my = innerHeight / 2, smx = mx, 
 addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; last = performance.now(); dot.style.transform = `translate(${mx}px,${my}px)`; });
 document.querySelectorAll('a,button,summary,figure').forEach(el => { el.addEventListener('pointerenter', () => dot.classList.add('big')); el.addEventListener('pointerleave', () => dot.classList.remove('big')); });
 const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .1 });
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
+/* reveals handled by the inline script in the page */
 
 /* ---------- experiences accordion (animated height) ---------- */
 document.querySelectorAll('.x').forEach(x => {

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add("rvjs")</script>
+
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Rooms — Polaris, aurora hotel in Inari, Finnish Lapland</title>
 <meta name="description" content="Four kinds of rooms at Polaris, a twelve-room aurora hotel in Inari: Glass Room, Observer’s Room, Shore Cabin and Kota Loft. Prices, what is included, and how to book.">
@@ -78,8 +80,9 @@ main{position:relative;z-index:3}
 .room .no{color:var(--glow);margin-bottom:14px}
 .room h2{font:800 clamp(52px,8.5vw,150px)/.85 Syne;letter-spacing:-.055em}
 .room .tag{max-width:380px;font:400 clamp(19px,1.7vw,24px)/1.35 Inter;color:var(--paper)}
-.hero{position:relative;height:min(78vh,820px);overflow:hidden;clip-path:inset(12% 8% 12% 8%);transition:clip-path 1.4s cubic-bezier(.7,0,.2,1)}
-.hero.in{clip-path:inset(0 0 0 0)}
+.hero{position:relative;height:min(78vh,820px);overflow:hidden;transition:clip-path 1.4s cubic-bezier(.7,0,.2,1)}
+.rvjs .hero{clip-path:inset(12% 8% 12% 8%)}
+.rvjs .hero.in{clip-path:inset(0 0 0 0)}
 .hero img{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;transform:translateY(var(--par,0px)) scale(var(--sc,1.12));transition:transform .1s linear}
 .hero.in img{--sc:1}
 .hero .cap{position:absolute;left:18px;bottom:16px;color:#fff;mix-blend-mode:difference}
@@ -195,8 +198,8 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
 #lb.on img{transform:none}
 #lb .c{position:absolute;bottom:22px;left:0;right:0;text-align:center;color:var(--dim)}
 
-.rv{opacity:0;transform:translateY(36px);transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1)}
-.rv.in{opacity:1;transform:none}
+.rvjs .rv{opacity:0;transform:translateY(36px);transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.rvjs .rv.in{opacity:1;transform:none}
 
 @media (max-width:860px){
  .top{grid-template-columns:1fr auto}.top .mid{display:none}.top .right a:not(.cur):not(.bk-l){display:none}
@@ -211,9 +214,8 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
  .bk{grid-template-columns:1fr}.rooms-pick{grid-template-columns:1fr 1fr}
  .sum{position:relative;top:0}
 }
-@media (prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}#grain{animation:none}.hero{clip-path:none}}
+@media (prefers-reduced-motion:reduce){.rvjs .rv{transition:none;opacity:1;transform:none}#grain{animation:none}.hero{clip-path:none}}
 @media (max-width:860px),(hover:none){#grain{display:none}.top.sc{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(4,6,13,.94)!important}}
-.room,#compare,#included,#rules{content-visibility:auto;contain-intrinsic-size:auto 1400px}
 @media (max-width:860px){.sum{backdrop-filter:none;background:rgba(4,6,13,.92)}}
 </style>
 <script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
@@ -478,6 +480,20 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
  <span class="credits">Photos via Wikimedia Commons: Giuseppe Milo (CC BY 2.0), YosemiteYamper (CC BY-SA 4.0), Ximonic / Simo Räsänen (CC BY-SA 4.0, CC BY 3.0), Daniele57C (CC BY 4.0), Martin Stojanovski (CC BY-SA 4.0), Jacek Rużyczka (CC BY-SA 4.0). Interior images are visualisations.</span>
 </footer>
 <div id="lb"><img alt=""><div class="c mono"></div></div>
+<script>
+/* reveal-on-scroll: independent from WebGL, with a scroll fallback for iOS Safari */
+(function(){
+ var els=[].slice.call(document.querySelectorAll('.rv,.sweep,.hero'));
+ function show(e){e.classList.add('in')}
+ function check(){var h=window.innerHeight;els=els.filter(function(e){var r=e.getBoundingClientRect();if(r.top<h*.94&&r.bottom>0){show(e);return false}return true})}
+ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){show(x.target);io.unobserve(x.target)}})},{rootMargin:'0px 0px -5% 0px',threshold:0});els.forEach(function(e){io.observe(e)})}
+ var t=0;function q(){if(!t)t=requestAnimationFrame(function(){t=0;check()})}
+ addEventListener('scroll',q,{passive:true});addEventListener('touchmove',q,{passive:true});addEventListener('resize',q);addEventListener('load',q);
+ check();setTimeout(check,300);setTimeout(check,1200);
+ // safety net: if anything is still hidden after 4 s above the fold, show it
+ setTimeout(function(){els.forEach(function(e){if(e.getBoundingClientRect().top<innerHeight)show(e)})},4000);
+})();
+</script>
 <script type="module" src="rooms.js"></script>
 </body>
 </html>
