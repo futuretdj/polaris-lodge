@@ -168,7 +168,17 @@ summary{cursor:pointer;list-style:none;display:flex;justify-content:space-betwee
 summary::-webkit-details-marker{display:none}
 summary:after{content:"+";font:300 28px Inter;color:var(--glow);transition:transform .35s}
 details[open] summary:after{transform:rotate(45deg)}
-details p{color:var(--dim);margin-top:12px;max-width:760px}
+.rules-lead{color:var(--dim);max-width:640px;margin:-3vh 0 5vh}
+.grp{color:var(--glow);margin:6vh 0 8px}
+details p{color:var(--dim);margin-top:14px;max-width:780px;line-height:1.7}
+details p:first-of-type{margin-top:18px}
+details p strong{color:var(--paper);font-weight:500}
+details p em{color:var(--paper);font-style:normal;border-bottom:1px dashed var(--hair)}
+details[open]{padding-bottom:28px}
+details[open] summary{color:var(--glow)}
+details>p{animation:op .6s ease both}
+@keyframes op{from{opacity:0;transform:translateY(-6px)}}
+
 
 footer{position:relative;z-index:3;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:28px clamp(18px,6vw,96px) 40px;color:var(--dim);border-top:1px solid var(--hair)}
 .credits{font-size:11px;line-height:1.7;max-width:820px}
@@ -206,7 +216,7 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
 <div class="top">
  <a class="mark" href="index.html"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 1v18M1 10h18M4 4l12 12M16 4L4 16"/></svg>Polaris</a>
  <div class="mid mono" id="clock">Aurora hotel · Inari</div>
- <div class="right mono"><a href="index.html">The hotel</a><a class="cur" href="rooms.html">Rooms</a><a class="bk-l" href="#book">Book</a></div>
+ <div class="right mono"><a href="index.html">The hotel</a><a class="cur" href="rooms.html">Rooms</a><a href="experiences.html">Experiences</a><a class="bk-l" href="#book">Book</a></div>
 </div>
 
 <main>
@@ -391,12 +401,67 @@ footer{position:relative;z-index:3;display:flex;justify-content:space-between;fl
 
  <section id="rules" class="wrap">
   <h2 class="rv">Good to know</h2>
-  <details><summary>Check-in and check-out</summary><p>Check-in from 15:00, check-out until 12:00. If your flight lands late, we wait — the night host is awake anyway.</p></details>
-  <details><summary>Why three nights minimum?</summary><p>The aurora appears on about three of every four clear nights in season, but clouds come and go. With three nights, more than nine of ten guests see it at least once.</p></details>
-  <details><summary>What if we don’t see the aurora?</summary><p>If you stay three nights or more and the sky stays closed every night, your next stay of three nights is 30% off. The offer is valid for two years.</p></details>
-  <details><summary>Children</summary><p>Children of all ages are welcome in the Shore Cabin. Glass and Observer’s Rooms are best for guests from 12 years. The Kota Loft is for adults only.</p></details>
-  <details><summary>Cancellation</summary><p>Free cancellation up to 30 days before arrival. Later, we keep 50% unless we can fill the room again — then we refund everything.</p></details>
-  <details><summary>How to get here</summary><p>Fly to Ivalo (IVL) via Helsinki — about 1 h 40 min. We meet you at arrivals. From Rovaniemi it is 3 h 30 min by car on a good winter road.</p></details>
+  <p class="rv rules-lead">Everything guests usually ask us before they book — answered properly. Open any question.</p>
+
+  <h3 class="mono grp">Arriving &amp; staying</h3>
+  <details><summary>Check-in, check-out and late arrivals</summary>
+   <p>Check-in is from 15:00 and check-out is until 12:00. In winter most flights to Ivalo land between 11:00 and 14:00, so we usually have your room ready the moment you arrive — just tell us your flight number when you book.</p>
+   <p>If your flight is late, or you drive up from Rovaniemi and get in after midnight, that is completely fine. The night host is awake until 03:00 anyway: they will meet you in the main house with a bowl of soup, a key and a short walk to your room with a lantern.</p>
+   <p>On the last day you can leave your bags in the main house, use the sauna and the lounge, and have lunch before the transfer back. Late check-out until 15:00 is free whenever the room is not needed for the next guest — ask at breakfast.</p>
+  </details>
+  <details><summary>Why three nights minimum?</summary>
+   <p>Because the sky does not keep a schedule. In the season the aurora appears on about three of every four clear nights here, but weather in Lapland moves in waves: two cloudy nights in a row are common, and so is a week of perfectly clear sky.</p>
+   <p>We have kept a night log since 2019. Guests who stay one night see the aurora about 55% of the time. With three nights it is more than 90%, and with five nights it is almost certain. We would rather sell fewer nights than send people home disappointed — that is the whole reason for the rule.</p>
+   <p>Three nights also gives you time for one day trip (huskies, reindeer, or the Sámi museum) without feeling rushed, and lets your body adjust to the short days. Many guests tell us the second night was the one they will remember.</p>
+  </details>
+  <details><summary>How the aurora wake-up works</summary>
+   <p>Every evening at dinner you choose a level on a small card in your room: <em>wake me for anything</em>, <em>only if it is strong</em>, or <em>do not wake me</em>. From 21:00 to 03:00 our night host watches the sky from the terrace and checks the magnetometer and the cloud radar.</p>
+   <p>When the aurora starts, the host calls your room phone — two short rings — or knocks, if you prefer. You will have a few minutes before it peaks: enough to put on the overalls that hang by your door and walk down to the lake shore, where there is a fire and hot berry juice.</p>
+   <p>On a typical clear night the host wakes guests once or twice. On the best nights — maybe ten a season — nobody goes to bed at all.</p>
+  </details>
+
+  <h3 class="mono grp">Weather &amp; what to bring</h3>
+  <details><summary>How cold is it really?</summary>
+   <p>In December and January the usual night temperature is between −15 °C and −25 °C; once or twice a winter it drops below −30 °C. February and March are a little milder in the daytime (around −5 °C to −10 °C) but nights stay cold. The air is very dry, so −20 °C here feels softer than −5 °C in a damp city.</p>
+   <p>Inside, every room is kept at 21–22 °C with heated floors. The main house, the sauna and the cars are always warm. You are never more than a few minutes away from heat.</p>
+  </details>
+  <details><summary>What should I pack?</summary>
+   <p>Less than you think. We lend thermal overalls, winter boots, mittens, hats and balaclavas in all sizes, so you do not need to buy special clothing for the trip.</p>
+   <p>Bring: thermal underwear (merino wool is best — two sets), wool socks, a fleece or warm sweater, comfortable clothes for indoors, a swimsuit for the sauna if you like, and lip balm and a rich hand cream for the dry air. A small head torch is useful, but please use the red light outside.</p>
+   <p>For photography: a spare battery for your camera or phone (cold empties batteries fast — keep them in an inner pocket), and a tripod if you have one. We also lend tripods.</p>
+  </details>
+  <details><summary>Will my phone be able to photograph the aurora?</summary>
+   <p>Yes — most phones made after 2020 do it surprisingly well. Switch on night mode, lean the phone against something steady (or use our tripods), and set an exposure of 3 to 10 seconds. Turn off the flash, focus at infinity if you can, and do not zoom.</p>
+   <p>On your first evening, our photographer gives a free 20-minute lesson in the lounge. If you want to go further, the Aurora Photo Night with a guide takes you to three locations with real cameras you can borrow.</p>
+  </details>
+
+  <h3 class="mono grp">Money &amp; plans</h3>
+  <details><summary>What if we don’t see the aurora?</summary>
+   <p>It happens rarely, but it happens: a whole week of cloud. If you stay three nights or more and the sky never opens — and our night log shows it — your next stay of three nights or more is 30% off. The offer is valid for two years and you can give it to someone else.</p>
+   <p>We will also try to make those cloudy nights special in other ways: the planetarium film in the lounge, a late sauna with the lake hole lit by candles, or a drive to the fells where clouds sometimes break.</p>
+  </details>
+  <details><summary>Cancellation and changes</summary>
+   <p>Free cancellation up to 30 days before arrival — you get everything back, no questions. Between 30 and 8 days before arrival we keep 50% of the price; within 7 days, the full price. But if we manage to fill the room again, we always refund everything.</p>
+   <p>Changing dates is free up to 14 days before arrival, as long as the new dates are available. If your flight is cancelled because of weather, we move your stay at no cost.</p>
+  </details>
+  <details><summary>Payment, deposit and prices</summary>
+   <p>You pay nothing when you request dates. When we confirm availability we send a secure payment link for a 30% deposit; the rest is paid on arrival by card. We accept all major cards, Apple Pay and Google Pay. Prices include Finnish VAT.</p>
+   <p>The price covers the room, breakfast, the night host, the smoke sauna, airport transfers and winter clothing. Dinner is €58 per person (three courses) and excursions are paid separately. Children under 6 stay free; from 6 to 14 they pay 50% of the adult rate.</p>
+  </details>
+
+  <h3 class="mono grp">Families &amp; accessibility</h3>
+  <details><summary>Children</summary>
+   <p>Children of all ages are welcome in the Shore Cabin, which has two bedrooms, a kitchen and space to play. For the Glass and Observer’s Rooms we suggest children from 12 years — the rooms are small and the night wake-ups can be hard for younger kids. The Kota Loft is for adults only because of the open fire.</p>
+   <p>We have children’s overalls and boots down to size 90 cm, sleds, and a short reindeer ride designed for small children. Babysitting can be arranged in the evening.</p>
+  </details>
+  <details><summary>Accessibility</summary>
+   <p>Two of the Glass Rooms are on ground level with step-free access, a wide door and a roll-in shower. The paths between buildings are cleared and lit, and we have a winter wheelchair with wide wheels. The smoke sauna and the kota have steps and narrow doors. Please tell us about any needs and we will plan the stay with you.</p>
+  </details>
+  <details><summary>How to get here</summary>
+   <p><strong>By plane:</strong> fly to Ivalo (IVL) — about 1 h 40 min from Helsinki, with direct winter flights from several European cities. We meet you in arrivals with a sign and a thermos of tea. The drive to Polaris is 40 minutes.</p>
+   <p><strong>By car:</strong> from Rovaniemi it is about 3 h 30 min on the E75, a good road that is cleared all winter. Winter tyres are required by law from December to February. Parking is free.</p>
+   <p><strong>By bus:</strong> the daily coach from Rovaniemi stops in Inari village, 9 km away. We pick you up from the stop.</p>
+  </details>
  </section>
 </main>
 <footer class="mono">
