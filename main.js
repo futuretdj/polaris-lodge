@@ -256,6 +256,7 @@ let px = 0, py = 0;
 document.querySelectorAll('.row').forEach(r => {
   r.addEventListener('pointerenter', () => { peek.classList.add('on'); peekImgs.forEach((im, k) => im.classList.toggle('on', k === +r.dataset.img)); });
   r.addEventListener('pointerleave', () => peek.classList.remove('on'));
+  r.addEventListener('click', () => { location.href = r.dataset.href; });
 });
 
 /* magnetic button */

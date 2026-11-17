@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Polaris — a night lodge at 68°54′N</title>
+<title>Polaris — aurora hotel in Inari, Finnish Lapland</title>
 <meta name="description" content="Twelve glass rooms at the edge of the tree line in Inari, Finnish Lapland. We switch off the lights at nine. The sky does the rest.">
 <meta name="theme-color" content="#04060d">
 <link rel="preload" href="fonts/syne.woff2" as="font" type="font/woff2" crossorigin>
@@ -111,6 +111,7 @@ main{position:relative;z-index:3}
 .row:hover h3{transform:translateX(18px)}
 .row .d{color:var(--dim);font-size:15px}
 .row .p{font:500 22px Syne;text-align:right;white-space:nowrap}
+.allrooms{display:inline-block;margin-top:26px;color:var(--glow);text-decoration:none;border-bottom:1px solid var(--glow);padding-bottom:4px;font-size:13px}
 #peek{position:fixed;left:0;top:0;z-index:30;width:320px;aspect-ratio:3/2;pointer-events:none;overflow:hidden;opacity:0;transform:translate(-50%,-50%) scale(.6) rotate(-4deg);transition:opacity .35s,transform .45s cubic-bezier(.2,.7,.2,1);box-shadow:0 20px 60px rgba(0,0,0,.6)}
 #peek.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-2deg)}
 #peek img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .3s}
@@ -175,7 +176,7 @@ footer a{color:var(--dim)}
 <div class="top">
  <a class="mark" href="#hero"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 1v18M1 10h18M4 4l12 12M16 4L4 16"/></svg>Polaris</a>
  <div class="mid mono" id="clock">Inari · --:--</div>
- <div class="right mono"><a class="l" href="#log">Night log</a><a class="l" href="#rooms">Rooms</a><a class="l" href="#close">Ask for dates</a></div>
+ <div class="right mono"><a class="l" href="#log">Night log</a><a class="l" href="rooms.html">Rooms &amp; prices</a><a class="l" href="rooms.html#book">Book</a></div>
 </div>
 <div class="side mono">68°54′N 27°01′E — Inari, Sápmi</div>
 <div class="meter"><i id="meterI"></i><b class="mono" id="meterB">22:00</b></div>
@@ -189,7 +190,7 @@ footer a{color:var(--dim)}
    <span>Sky tonight</span><span class="live" id="t4">clear · Kp 4</span>
   </div>
   <h1 class="tsh" id="tsh" aria-hidden="true">Polaris</h1><h1 id="title">Polaris</h1>
-  <p class="lede"><strong>Twelve glass rooms at the edge of the tree line.</strong> We switch off the lights at nine. The sky does the rest.</p>
+  <p class="lede"><strong>An aurora hotel in Inari, Finnish Lapland.</strong> Twelve rooms with glass roofs at the edge of the tree line. We switch off the lights at nine. The sky does the rest. <a href="rooms.html" style="color:var(--glow)">See the rooms →</a></p>
   <div class="cue mono"><i></i>scroll into the night</div>
  </section>
 
@@ -231,12 +232,13 @@ footer a{color:var(--dim)}
  <section id="rooms" class="wrap">
   <h2 class="rv"><span class="sweep">Four ways to stay up all night</span></h2>
   <div class="rows rv">
-   <div class="row" data-img="0"><h3>Glass Room</h3><span class="d">24 m² · glass roof, heated · king bed facing north</span><span class="k mono">×8</span><span class="p">€480</span></div>
-   <div class="row" data-img="1"><h3>Observer’s Room</h3><span class="d">Private 400 mm telescope · star charts · late breakfast</span><span class="k mono">×2</span><span class="p">€560</span></div>
-   <div class="row" data-img="2"><h3>Shore Cabin</h3><span class="d">Own wood sauna · fireplace · sleeps four</span><span class="k mono">×1</span><span class="p">€690</span></div>
-   <div class="row" data-img="3"><h3>Kota Loft</h3><span class="d">Open fire under a smoke hole · reindeer skins · for the brave</span><span class="k mono">×1</span><span class="p">€420</span></div>
+   <div class="row" data-img="0" data-href="rooms.html#glass"><h3>Glass Room</h3><span class="d">24 m² · glass roof, heated · king bed facing north</span><span class="k mono">×8</span><span class="p">€480</span></div>
+   <div class="row" data-img="1" data-href="rooms.html#observer"><h3>Observer’s Room</h3><span class="d">Private 400 mm telescope · star charts · late breakfast</span><span class="k mono">×2</span><span class="p">€560</span></div>
+   <div class="row" data-img="2" data-href="rooms.html#shore"><h3>Shore Cabin</h3><span class="d">Own wood sauna · fireplace · sleeps four</span><span class="k mono">×1</span><span class="p">€690</span></div>
+   <div class="row" data-img="3" data-href="rooms.html#kota"><h3>Kota Loft</h3><span class="d">Open fire under a smoke hole · reindeer skins · for the brave</span><span class="k mono">×1</span><span class="p">€420</span></div>
   </div>
   <p class="mono rv" style="color:var(--dim);margin-top:22px">Per night, two guests, breakfast and the night host included. Minimum three nights — the sky doesn’t keep a schedule.</p>
+  <a class="mono rv allrooms" href="rooms.html">Photos, details &amp; booking for every room →</a>
  </section>
 
  <div class="ticker" aria-hidden="true"><div><span>200 aurora nights a year</span><em>✳</em><span>−31 °C, coldest night last winter</span><em>✳</em><span>0 streetlights</span><em>✳</em><span>9 h of darkness in November</span><em>✳</em><span>1 knock on your door</span><em>✳</em></div><div><span>200 aurora nights a year</span><em>✳</em><span>−31 °C, coldest night last winter</span><em>✳</em><span>0 streetlights</span><em>✳</em><span>9 h of darkness in November</span><em>✳</em><span>1 knock on your door</span><em>✳</em></div></div>
@@ -248,6 +250,7 @@ footer a{color:var(--dim)}
    <label class="mono">Guests<select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label>
    <label class="mono">Email<input type="email" required placeholder="you@somewhere.eu"></label>
    <button class="go" type="submit">Ask for<br>dates</button>
+   <a class="mono" href="rooms.html#book" style="color:var(--glow)">or plan your nights &amp; see prices →</a>
    <div class="sent mono" id="sent"></div>
   </form>
  </section>
